@@ -1,0 +1,26 @@
+{
+  "name": "serverspecialclick",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/SpecialTeam619/ServerSpecialClick#readme",
+  "bugs": {
+    "url": "https://github.com/SpecialTeam619/ServerSpecialClick/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpecialTeam619/ServerSpecialClick.git"
+  },
+  "license": "ISC",
+  "author": "Vlad, Sasha",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node ./dist/main.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.5"
+  }
+}
