@@ -18,7 +18,8 @@
     "start": "tsc && node ./dist/main.js"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "inversify": "^7.10.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.5"
