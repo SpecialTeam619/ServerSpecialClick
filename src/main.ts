@@ -9,6 +9,10 @@ import { TYPES } from './types';
 import { LoggerService } from './logger/logger.service';
 import { IExeptionFilter } from './errors/exptions.filter.interface';
 import { ExeptionFilter } from './errors/exeption.filter';
+import { IUserController } from './users/users.interface';
+import { UserController } from './users/users.controller';
+import { IUserService } from './users/users.service.interface';
+import { UserService } from './users/users.service';
 
 export const appBindings = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
@@ -19,6 +23,14 @@ export const appBindings = new ContainerModule(
         options
             .bind<IExeptionFilter>(TYPES.ExceptionFilter)
             .to(ExeptionFilter)
+            .inSingletonScope();
+        options
+            .bind<IUserController>(TYPES.UserController)
+            .to(UserController)
+            .inSingletonScope();
+        options
+            .bind<IUserService>(TYPES.UserService)
+            .to(UserService)
             .inSingletonScope();
         options.bind<App>(TYPES.Application).to(App);
     },
