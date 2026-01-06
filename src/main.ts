@@ -13,6 +13,8 @@ import { IUserController } from './users/users.interface';
 import { UserController } from './users/users.controller';
 import { IUserService } from './users/users.service.interface';
 import { UserService } from './users/users.service';
+import { IPrismaService } from './database/prisma.service.interface';
+import { PrismaService } from './database/prisma.service';
 
 export const appBindings = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
@@ -32,6 +34,9 @@ export const appBindings = new ContainerModule(
             .bind<IUserService>(TYPES.UserService)
             .to(UserService)
             .inSingletonScope();
+        options
+            .bind<IPrismaService>(TYPES.PrismaService)
+            .to(PrismaService)
         options.bind<App>(TYPES.Application).to(App);
     },
 );

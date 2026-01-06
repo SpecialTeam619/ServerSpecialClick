@@ -1,0 +1,21 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated"
+}
+
+model UserModel {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String?
+  role      Role     @default(CUSTOMER)
+}
+
+enum Role {
+  CUSTOMER
+  LESSOR
+}
