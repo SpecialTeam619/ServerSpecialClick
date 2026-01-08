@@ -9,24 +9,25 @@ import { UserService } from './users.service';
 import { UserLoginDto } from './dto/login.dto';
 import { UserRegisterDto } from './dto/register.dto';
 import { sign } from 'jsonwebtoken';
-// import { validateMiddleware } from "../common/validate.middleware";
+import { validateMiddleware } from '../common/validate.middleware';
+import { GuardMiddleware } from '../common/guard.middleware';
+import { IConfigService } from '../config/config.service.interface';
 // import { ConfigService } from "../config/config.service";
-// import { GuardMiddleware } from "../common/guard.middleware";
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
     constructor(
         @inject(TYPES.ILogger) private loggerService: ILogger,
         @inject(TYPES.UserService) private UserService: UserService,
-    ) // @inject(TYPES.ConfigService) private configService: ConfigService
-    {
+        @inject(TYPES.ConfigService) private configService: IConfigService
+    ) {
         super(loggerService);
         this.bindRoutes([
             {
                 path: '/register',
                 method: 'post',
                 func: this.register,
-                // middlewares: [new validateMiddleware(UserRegisternDto)],
+                middlewares: [new validateMiddleware(UserRegisterDto)],
             },
             {
                 path: '/login',
@@ -43,7 +44,7 @@ export class UserController extends BaseController implements IUserController {
                 path: '/info',
                 method: 'get',
                 func: this.info,
-                // middlewares: [new GuardMiddleware()],
+                middlewares: [new GuardMiddleware()],
             },
         ]);
     }
@@ -59,7 +60,7 @@ export class UserController extends BaseController implements IUserController {
                 new HTTPError(401, 'Неверная почта или пароль', 'login'),
             );
         }
-        const jwt = await this.singJWT(body.email, 'SECRET');
+        const jwt = await this.singJWT(body.email, this.configService.get('SECRET'));
         this.ok(res, { jwt });
     }
 
@@ -83,7 +84,6 @@ export class UserController extends BaseController implements IUserController {
         res: Response,
         next: NextFunction,
     ): Promise<void> {
-      this.loggerService.log(body)
         const result = await this.UserService.createUser(body);
         if (!result) {
             return next(

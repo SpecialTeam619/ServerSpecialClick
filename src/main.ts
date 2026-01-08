@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import {
     Container,
     ContainerModule,
@@ -15,6 +16,10 @@ import { IUserService } from './users/users.service.interface';
 import { UserService } from './users/users.service';
 import { IPrismaService } from './database/prisma.service.interface';
 import { PrismaService } from './database/prisma.service';
+import { IUsersRepository } from './users/users.repository.interface';
+import { UsersRepository } from './users/users.repository';
+import { IConfigService } from './config/config.service.interface';
+import { ConfigService } from './config/config.service';
 
 export const appBindings = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
@@ -31,12 +36,17 @@ export const appBindings = new ContainerModule(
             .to(UserController)
             .inSingletonScope();
         options
+            .bind<IConfigService>(TYPES.ConfigService)
+            .to(ConfigService)
+            .inSingletonScope();
+        options
             .bind<IUserService>(TYPES.UserService)
             .to(UserService)
             .inSingletonScope();
+        options.bind<IPrismaService>(TYPES.PrismaService).to(PrismaService);
         options
-            .bind<IPrismaService>(TYPES.PrismaService)
-            .to(PrismaService)
+            .bind<IUsersRepository>(TYPES.UsersRepository)
+            .to(UsersRepository);
         options.bind<App>(TYPES.Application).to(App);
     },
 );

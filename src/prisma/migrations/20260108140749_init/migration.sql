@@ -8,6 +8,7 @@ CREATE TABLE "UserModel" (
     "email" TEXT NOT NULL,
     "name" TEXT,
     "role" "Role" NOT NULL DEFAULT 'CUSTOMER',
+    "password" TEXT NOT NULL,
 
     CONSTRAINT "UserModel_pkey" PRIMARY KEY ("id")
 );

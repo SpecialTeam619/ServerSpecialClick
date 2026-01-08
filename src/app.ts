@@ -5,6 +5,9 @@ import { TYPES } from './types';
 import { ILogger } from './logger/logger.interface';
 import { IExeptionFilter } from './errors/exptions.filter.interface';
 import { UserController } from './users/users.controller';
+import { IPrismaService } from './database/prisma.service.interface';
+import { AuthMiddleware } from './common/auth.middleware';
+import { IConfigService } from './config/config.service.interface';
 
 export class App {
     app: Express;
@@ -14,7 +17,9 @@ export class App {
     constructor(
         @inject(TYPES.ILogger) private logger: ILogger,
         @inject(TYPES.ExceptionFilter) private exeptionFilter: IExeptionFilter,
+        @inject(TYPES.ConfigService) private configService: IConfigService,
         @inject(TYPES.UserController) private userController: UserController,
+        @inject(TYPES.PrismaService) private prismaService: IPrismaService,
     ) {
         this.app = express();
         this.port = 8000;
@@ -22,10 +27,12 @@ export class App {
 
     useMiddleware(): void {
         this.app.use(json());
+        const authMiddleware = new AuthMiddleware(this.configService.get('SECRET'))
+        this.app.use(authMiddleware.execute.bind(authMiddleware));
     }
 
     useRoutes() {
-        this.app.use("/users", this.userController.router)
+        this.app.use('/users', this.userController.router);
     }
 
     useExeptionFilters() {
@@ -33,8 +40,9 @@ export class App {
     }
 
     public async init() {
+        await this.prismaService.connect();
         this.useMiddleware();
-        this.useRoutes()
+        this.useRoutes();
         this.useExeptionFilters();
         this.server = this.app.listen(this.port);
         this.logger.log(`Server is runner on "http://localhost:${this.port}"`);

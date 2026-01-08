@@ -1,4 +1,5 @@
-import { PrismaClient } from '../prisma/generated';
+import { PrismaClient } from '../prisma/generated/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../types';
 import { ILogger } from '../logger/logger.interface';
@@ -8,7 +9,9 @@ export class PrismaService {
     client: PrismaClient;
 
     constructor(@inject(TYPES.ILogger) private logger: ILogger) {
-        this.client = new PrismaClient();
+        const connectionString = `${process.env.DATABASE_URL}`;
+        const adapter = new PrismaPg({ connectionString });
+        this.client = new PrismaClient({ adapter });
     }
 
     async connect(): Promise<void> {
