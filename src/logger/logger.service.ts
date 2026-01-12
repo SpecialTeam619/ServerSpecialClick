@@ -1,26 +1,26 @@
+import { ILogObj, Logger } from 'tslog'
 import { injectable } from 'inversify';
 import { ILogger } from './logger.interface';
 
 @injectable()
 export class LoggerService implements ILogger {
-    log(...args: unknown[]) {
-        console.log(
-            '\x1b[34m' + '\x1b[1m' + '[LOG]' + '\x1b[1m' + '\x1b[0m',
-            ...args,
-        );
+    public logger: Logger<ILogObj>;
+    
+    constructor() {
+        this.logger = new Logger({
+            prettyLogTemplate: "{{hh}}:{{MM}}:{{ss}}:{{ms}}\t{{logLevelName}}\t",
+        })
     }
 
+    log(...args: unknown[]) {
+        this.logger.info(...args)
+    }
+    
     error(...args: unknown[]) {
-        console.error(
-            '\x1b[31m' + '\x1b[1m' + '[ERROR]' + '\x1b[1m' + '\x1b[0m',
-            ...args,
-        );
+        this.logger.info(...args)
     }
 
     warn(...args: unknown[]) {
-        console.warn(
-            '\x1b[33m' + '\x1b[1m' + '[WARN]' + '\x1b[1m' + '\x1b[0m',
-            ...args,
-        );
+        this.logger.info(...args)
     }
 }
