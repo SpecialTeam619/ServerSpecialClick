@@ -27,7 +27,9 @@ export class App {
 
     useMiddleware(): void {
         this.app.use(json());
-        const authMiddleware = new AuthMiddleware(this.configService.get('SECRET'))
+        const authMiddleware = new AuthMiddleware(
+            this.configService.get('SECRET'),
+        );
         this.app.use(authMiddleware.execute.bind(authMiddleware));
     }
 
@@ -46,5 +48,9 @@ export class App {
         this.useExeptionFilters();
         this.server = this.app.listen(this.port);
         this.logger.log(`Server is runner on "http://localhost:${this.port}"`);
+    }
+
+    public close(): void {
+        this.server.close();
     }
 }
