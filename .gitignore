@@ -1,3 +1,6 @@
+#Directory for storage uploads file
+uploads
+
 # Logs
 logs
 *.log

@@ -8,11 +8,13 @@ import { IUsersRepository } from './users.repository.interface';
 import { IUserService } from './users.service.interface';
 import { injectable, inject } from 'inversify';
 import { IConfigService } from '../config/config.service.interface';
+import { ILogger } from '../logger/logger.interface';
 
 @injectable()
 export class UserService implements IUserService {
     constructor(
-        @inject(TYPES.ConfigService) private configServie: IConfigService,
+        @inject(TYPES.ConfigService) private configServie: IConfigService,        
+        @inject(TYPES.ILogger) private loggerService: ILogger,
         @inject(TYPES.UsersRepository)
         private usersRepository: IUsersRepository,
     ) {}
@@ -20,8 +22,9 @@ export class UserService implements IUserService {
     async createUser({
         name,
         email,
-        password,
-    }: UserRegisterDto): Promise<UserModel | null> {
+        password
+    }: UserRegisterDto, file?: File): Promise<UserModel | null> {
+        // создание пользователя
         const newUser = new User(email, name);
         const salt = this.configServie.get('SALT');
 
@@ -29,6 +32,10 @@ export class UserService implements IUserService {
         const existedUser = await this.usersRepository.find(email);
         if (existedUser) {
             return null;
+        }
+
+        if (file) {
+            
         }
         return this.usersRepository.create(newUser);
     }

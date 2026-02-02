@@ -12,14 +12,14 @@ import { sign } from 'jsonwebtoken';
 import { validateMiddleware } from '../common/validate.middleware';
 import { GuardMiddleware } from '../common/guard.middleware';
 import { IConfigService } from '../config/config.service.interface';
-// import { ConfigService } from "../config/config.service";
+import { MulterMiddleware } from '../common/multer.middleware';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
     constructor(
         @inject(TYPES.ILogger) private loggerService: ILogger,
         @inject(TYPES.UserService) private UserService: UserService,
-        @inject(TYPES.ConfigService) private configService: IConfigService
+        @inject(TYPES.ConfigService) private configService: IConfigService,
     ) {
         super(loggerService);
         this.bindRoutes([
@@ -27,7 +27,10 @@ export class UserController extends BaseController implements IUserController {
                 path: '/register',
                 method: 'post',
                 func: this.register,
-                middlewares: [new validateMiddleware(UserRegisterDto)],
+                middlewares: [
+                    new MulterMiddleware(),
+                    new validateMiddleware(UserRegisterDto),
+                ],
             },
             {
                 path: '/login',
@@ -60,7 +63,10 @@ export class UserController extends BaseController implements IUserController {
                 new HTTPError(401, 'Неверная почта или пароль', 'login'),
             );
         }
-        const jwt = await this.singJWT(body.email, this.configService.get('SECRET'));
+        const jwt = await this.singJWT(
+            body.email,
+            this.configService.get('SECRET'),
+        );
         this.ok(res, { jwt });
     }
 
@@ -80,11 +86,11 @@ export class UserController extends BaseController implements IUserController {
     }
 
     async register(
-        { body }: Request<{}, {}, UserRegisterDto>,
+        { body, file }: Request<{}, {}, UserRegisterDto>,
         res: Response,
         next: NextFunction,
     ): Promise<void> {
-        const result = await this.UserService.createUser(body);
+        const result = await this.UserService.createUser(body, file);
         if (!result) {
             return next(
                 new HTTPError(422, 'Такой пользователь уже существует'),
