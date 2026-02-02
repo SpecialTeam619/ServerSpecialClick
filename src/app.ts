@@ -5,7 +5,7 @@ import { TYPES } from './types';
 import { ILogger } from './logger/logger.interface';
 import { IExeptionFilter } from './errors/exptions.filter.interface';
 import { UserController } from './users/users.controller';
-import { IPrismaService } from './database/prisma.service.interface';
+import { IPrismaService } from './database/prisma.interface';
 import { AuthMiddleware } from './common/auth.middleware';
 import { IConfigService } from './config/config.service.interface';
 

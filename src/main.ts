@@ -14,7 +14,7 @@ import { IUserController } from './users/users.interface';
 import { UserController } from './users/users.controller';
 import { IUserService } from './users/users.service.interface';
 import { UserService } from './users/users.service';
-import { IPrismaService } from './database/prisma.service.interface';
+import { IPrismaService } from './database/prisma.interface';
 import { PrismaService } from './database/prisma.service';
 import { IUsersRepository } from './users/users.repository.interface';
 import { UsersRepository } from './users/users.repository';

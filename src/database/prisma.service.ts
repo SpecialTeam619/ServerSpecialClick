@@ -3,9 +3,10 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../types';
 import { ILogger } from '../logger/logger.interface';
+import { IPrismaService } from './prisma.interface';
 
 @injectable()
-export class PrismaService {
+export class PrismaService implements IPrismaService {
     client: PrismaClient;
 
     constructor(@inject(TYPES.ILogger) private logger: ILogger) {
