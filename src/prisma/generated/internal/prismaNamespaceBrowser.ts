@@ -51,7 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  UserModel: 'UserModel'
+  UserModel: 'UserModel',
+  PostModel: 'PostModel'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -60,12 +61,12 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  * Enums
  */
 
-export const TransactionIsolationLevel = {
+export const TransactionIsolationLevel = runtime.makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
   RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
-} as const
+} as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
@@ -80,6 +81,19 @@ export const UserModelScalarFieldEnum = {
 } as const
 
 export type UserModelScalarFieldEnum = (typeof UserModelScalarFieldEnum)[keyof typeof UserModelScalarFieldEnum]
+
+
+export const PostModelScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  authorId: 'authorId',
+  title: 'title',
+  description: 'description',
+  price: 'price',
+  properties: 'properties'
+} as const
+
+export type PostModelScalarFieldEnum = (typeof PostModelScalarFieldEnum)[keyof typeof PostModelScalarFieldEnum]
 
 
 export const SortOrder = {

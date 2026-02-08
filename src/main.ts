@@ -20,6 +20,12 @@ import { IUsersRepository } from './users/users.repository.interface';
 import { UsersRepository } from './users/users.repository';
 import { IConfigService } from './config/config.service.interface';
 import { ConfigService } from './config/config.service';
+import { PostsService } from './posts/posts.service';
+import { PostsController } from './posts/posts.controller';
+import { IPostsController } from './posts/posts.interface';
+import { IPostsService } from './posts/posts.service.interfact';
+import { IPostsRepository } from './posts/posts.repository.interface';
+import { PostsRepository } from './posts/posts.repository';
 
 export const appBindings = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
@@ -47,6 +53,13 @@ export const appBindings = new ContainerModule(
         options
             .bind<IUsersRepository>(TYPES.UsersRepository)
             .to(UsersRepository);
+        options.bind<IPostsService>(TYPES.PostsService).to(PostsService);
+        options
+            .bind<IPostsController>(TYPES.PostsController)
+            .to(PostsController);
+        options
+            .bind<IPostsRepository>(TYPES.PostsRepository)
+            .to(PostsRepository);
         options.bind<App>(TYPES.Application).to(App);
     },
 );

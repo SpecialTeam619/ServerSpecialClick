@@ -108,7 +108,7 @@ export class UserController extends BaseController implements IUserController {
         const userInfo = await this.UserService.getUserInfo(user);
         if (!userInfo)
             return next(new HTTPError(404, 'Пользователь не найден'));
-        this.ok(res, { email: userInfo.email });
+        this.ok(res, { email: userInfo });
     }
 
     private singJWT(email: string, secret: string): Promise<string> {

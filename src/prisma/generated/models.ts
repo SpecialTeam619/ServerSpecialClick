@@ -9,4 +9,5 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/UserModel'
+export type * from './models/PostModel'
 export type * from './commonInputTypes'

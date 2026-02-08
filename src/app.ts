@@ -8,6 +8,7 @@ import { UserController } from './users/users.controller';
 import { IPrismaService } from './database/prisma.interface';
 import { AuthMiddleware } from './common/auth.middleware';
 import { IConfigService } from './config/config.service.interface';
+import { PostsController } from './posts/posts.controller';
 
 export class App {
     app: Express;
@@ -20,6 +21,7 @@ export class App {
         @inject(TYPES.ConfigService) private configService: IConfigService,
         @inject(TYPES.UserController) private userController: UserController,
         @inject(TYPES.PrismaService) private prismaService: IPrismaService,
+        @inject(TYPES.PostsController) private postsController: PostsController,
     ) {
         this.app = express();
         this.port = 8000;
@@ -35,6 +37,7 @@ export class App {
 
     useRoutes() {
         this.app.use('/users', this.userController.router);
+        this.app.use('/posts', this.postsController.router);
     }
 
     useExeptionFilters() {

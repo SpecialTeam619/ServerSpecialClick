@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.2.0
- * Query Engine version: 0c8ef2ce45c83248ab3df073180d5eda9e8be7a3
+ * Prisma Client JS version: 7.3.0
+ * Query Engine version: 9d6ad21cbbceab97458517b147a6a09ff43aa735
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.2.0",
-  engine: "0c8ef2ce45c83248ab3df073180d5eda9e8be7a3"
+  client: "7.3.0",
+  engine: "9d6ad21cbbceab97458517b147a6a09ff43aa735"
 }
 
 /**
@@ -384,7 +384,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  UserModel: 'UserModel'
+  UserModel: 'UserModel',
+  PostModel: 'PostModel'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -400,7 +401,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "userModel"
+    modelProps: "userModel" | "postModel"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +479,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PostModel: {
+      payload: Prisma.$PostModelPayload<ExtArgs>
+      fields: Prisma.PostModelFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PostModelFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostModelPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PostModelFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostModelPayload>
+        }
+        findFirst: {
+          args: Prisma.PostModelFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostModelPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PostModelFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostModelPayload>
+        }
+        findMany: {
+          args: Prisma.PostModelFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostModelPayload>[]
+        }
+        create: {
+          args: Prisma.PostModelCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostModelPayload>
+        }
+        createMany: {
+          args: Prisma.PostModelCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PostModelCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostModelPayload>[]
+        }
+        delete: {
+          args: Prisma.PostModelDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostModelPayload>
+        }
+        update: {
+          args: Prisma.PostModelUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostModelPayload>
+        }
+        deleteMany: {
+          args: Prisma.PostModelDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PostModelUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PostModelUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostModelPayload>[]
+        }
+        upsert: {
+          args: Prisma.PostModelUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostModelPayload>
+        }
+        aggregate: {
+          args: Prisma.PostModelAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePostModel>
+        }
+        groupBy: {
+          args: Prisma.PostModelGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PostModelGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PostModelCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PostModelCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -527,6 +602,19 @@ export const UserModelScalarFieldEnum = {
 } as const
 
 export type UserModelScalarFieldEnum = (typeof UserModelScalarFieldEnum)[keyof typeof UserModelScalarFieldEnum]
+
+
+export const PostModelScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  authorId: 'authorId',
+  title: 'title',
+  description: 'description',
+  price: 'price',
+  properties: 'properties'
+} as const
+
+export type PostModelScalarFieldEnum = (typeof PostModelScalarFieldEnum)[keyof typeof PostModelScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -724,6 +812,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   userModel?: Prisma.UserModelOmit
+  postModel?: Prisma.PostModelOmit
 }
 
 /* Types for Logging */

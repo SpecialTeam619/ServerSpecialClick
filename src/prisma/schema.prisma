@@ -20,7 +20,20 @@ model UserModel {
     name      String?
     role      Role     @default(CUSTOMER)
     password  String
+    posts     PostModel[]
 }
+
+model PostModel {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    authorId  Int
+    author    UserModel @relation(fields: [authorId], references: [id])
+    title     String
+    description String
+    price     Float
+    properties String[]
+}
+
 
 enum Role {
     CUSTOMER

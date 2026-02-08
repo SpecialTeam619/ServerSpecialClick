@@ -224,6 +224,7 @@ export type UserModelWhereInput = {
   name?: Prisma.StringNullableFilter<"UserModel"> | string | null
   role?: Prisma.EnumRoleFilter<"UserModel"> | $Enums.Role
   password?: Prisma.StringFilter<"UserModel"> | string
+  posts?: Prisma.PostModelListRelationFilter
 }
 
 export type UserModelOrderByWithRelationInput = {
@@ -233,6 +234,7 @@ export type UserModelOrderByWithRelationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  posts?: Prisma.PostModelOrderByRelationAggregateInput
 }
 
 export type UserModelWhereUniqueInput = Prisma.AtLeast<{
@@ -245,6 +247,7 @@ export type UserModelWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringNullableFilter<"UserModel"> | string | null
   role?: Prisma.EnumRoleFilter<"UserModel"> | $Enums.Role
   password?: Prisma.StringFilter<"UserModel"> | string
+  posts?: Prisma.PostModelListRelationFilter
 }, "id" | "email">
 
 export type UserModelOrderByWithAggregationInput = {
@@ -279,6 +282,7 @@ export type UserModelCreateInput = {
   name?: string | null
   role?: $Enums.Role
   password: string
+  posts?: Prisma.PostModelCreateNestedManyWithoutAuthorInput
 }
 
 export type UserModelUncheckedCreateInput = {
@@ -288,6 +292,7 @@ export type UserModelUncheckedCreateInput = {
   name?: string | null
   role?: $Enums.Role
   password: string
+  posts?: Prisma.PostModelUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserModelUpdateInput = {
@@ -296,6 +301,7 @@ export type UserModelUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  posts?: Prisma.PostModelUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserModelUncheckedUpdateInput = {
@@ -305,6 +311,7 @@ export type UserModelUncheckedUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  posts?: Prisma.PostModelUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserModelCreateManyInput = {
@@ -368,6 +375,11 @@ export type UserModelSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
+export type UserModelScalarRelationFilter = {
+  is?: Prisma.UserModelWhereInput
+  isNot?: Prisma.UserModelWhereInput
+}
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
@@ -392,6 +404,99 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type UserModelCreateNestedOneWithoutPostsInput = {
+  create?: Prisma.XOR<Prisma.UserModelCreateWithoutPostsInput, Prisma.UserModelUncheckedCreateWithoutPostsInput>
+  connectOrCreate?: Prisma.UserModelCreateOrConnectWithoutPostsInput
+  connect?: Prisma.UserModelWhereUniqueInput
+}
+
+export type UserModelUpdateOneRequiredWithoutPostsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserModelCreateWithoutPostsInput, Prisma.UserModelUncheckedCreateWithoutPostsInput>
+  connectOrCreate?: Prisma.UserModelCreateOrConnectWithoutPostsInput
+  upsert?: Prisma.UserModelUpsertWithoutPostsInput
+  connect?: Prisma.UserModelWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserModelUpdateToOneWithWhereWithoutPostsInput, Prisma.UserModelUpdateWithoutPostsInput>, Prisma.UserModelUncheckedUpdateWithoutPostsInput>
+}
+
+export type UserModelCreateWithoutPostsInput = {
+  createdAt?: Date | string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  password: string
+}
+
+export type UserModelUncheckedCreateWithoutPostsInput = {
+  id?: number
+  createdAt?: Date | string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  password: string
+}
+
+export type UserModelCreateOrConnectWithoutPostsInput = {
+  where: Prisma.UserModelWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserModelCreateWithoutPostsInput, Prisma.UserModelUncheckedCreateWithoutPostsInput>
+}
+
+export type UserModelUpsertWithoutPostsInput = {
+  update: Prisma.XOR<Prisma.UserModelUpdateWithoutPostsInput, Prisma.UserModelUncheckedUpdateWithoutPostsInput>
+  create: Prisma.XOR<Prisma.UserModelCreateWithoutPostsInput, Prisma.UserModelUncheckedCreateWithoutPostsInput>
+  where?: Prisma.UserModelWhereInput
+}
+
+export type UserModelUpdateToOneWithWhereWithoutPostsInput = {
+  where?: Prisma.UserModelWhereInput
+  data: Prisma.XOR<Prisma.UserModelUpdateWithoutPostsInput, Prisma.UserModelUncheckedUpdateWithoutPostsInput>
+}
+
+export type UserModelUpdateWithoutPostsInput = {
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type UserModelUncheckedUpdateWithoutPostsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+
+/**
+ * Count Type UserModelCountOutputType
+ */
+
+export type UserModelCountOutputType = {
+  posts: number
+}
+
+export type UserModelCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  posts?: boolean | UserModelCountOutputTypeCountPostsArgs
+}
+
+/**
+ * UserModelCountOutputType without action
+ */
+export type UserModelCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserModelCountOutputType
+   */
+  select?: Prisma.UserModelCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserModelCountOutputType without action
+ */
+export type UserModelCountOutputTypeCountPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PostModelWhereInput
+}
 
 
 export type UserModelSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -401,6 +506,8 @@ export type UserModelSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   name?: boolean
   role?: boolean
   password?: boolean
+  posts?: boolean | Prisma.UserModel$postsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserModelCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userModel"]>
 
 export type UserModelSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -431,10 +538,18 @@ export type UserModelSelectScalar = {
 }
 
 export type UserModelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "email" | "name" | "role" | "password", ExtArgs["result"]["userModel"]>
+export type UserModelInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  posts?: boolean | Prisma.UserModel$postsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserModelCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type UserModelIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserModelIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UserModelPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UserModel"
-  objects: {}
+  objects: {
+    posts: Prisma.$PostModelPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     createdAt: Date
@@ -836,6 +951,7 @@ readonly fields: UserModelFieldRefs;
  */
 export interface Prisma__UserModelClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  posts<T extends Prisma.UserModel$postsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserModel$postsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostModelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -888,6 +1004,10 @@ export type UserModelFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.UserModelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserModelInclude<ExtArgs> | null
+  /**
    * Filter, which UserModel to fetch.
    */
   where: Prisma.UserModelWhereUniqueInput
@@ -906,6 +1026,10 @@ export type UserModelFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.UserModelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserModelInclude<ExtArgs> | null
+  /**
    * Filter, which UserModel to fetch.
    */
   where: Prisma.UserModelWhereUniqueInput
@@ -923,6 +1047,10 @@ export type UserModelFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the UserModel
    */
   omit?: Prisma.UserModelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserModelInclude<ExtArgs> | null
   /**
    * Filter, which UserModel to fetch.
    */
@@ -972,6 +1100,10 @@ export type UserModelFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.UserModelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserModelInclude<ExtArgs> | null
+  /**
    * Filter, which UserModel to fetch.
    */
   where?: Prisma.UserModelWhereInput
@@ -1020,6 +1152,10 @@ export type UserModelFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   omit?: Prisma.UserModelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserModelInclude<ExtArgs> | null
+  /**
    * Filter, which UserModels to fetch.
    */
   where?: Prisma.UserModelWhereInput
@@ -1062,6 +1198,10 @@ export type UserModelCreateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the UserModel
    */
   omit?: Prisma.UserModelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserModelInclude<ExtArgs> | null
   /**
    * The data needed to create a UserModel.
    */
@@ -1110,6 +1250,10 @@ export type UserModelUpdateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the UserModel
    */
   omit?: Prisma.UserModelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserModelInclude<ExtArgs> | null
   /**
    * The data needed to update a UserModel.
    */
@@ -1177,6 +1321,10 @@ export type UserModelUpsertArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.UserModelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserModelInclude<ExtArgs> | null
+  /**
    * The filter to search for the UserModel to update in case it exists.
    */
   where: Prisma.UserModelWhereUniqueInput
@@ -1203,6 +1351,10 @@ export type UserModelDeleteArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.UserModelOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserModelInclude<ExtArgs> | null
+  /**
    * Filter which UserModel to delete.
    */
   where: Prisma.UserModelWhereUniqueInput
@@ -1223,6 +1375,30 @@ export type UserModelDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * UserModel.posts
+ */
+export type UserModel$postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PostModel
+   */
+  select?: Prisma.PostModelSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PostModel
+   */
+  omit?: Prisma.PostModelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PostModelInclude<ExtArgs> | null
+  where?: Prisma.PostModelWhereInput
+  orderBy?: Prisma.PostModelOrderByWithRelationInput | Prisma.PostModelOrderByWithRelationInput[]
+  cursor?: Prisma.PostModelWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PostModelScalarFieldEnum | Prisma.PostModelScalarFieldEnum[]
+}
+
+/**
  * UserModel without action
  */
 export type UserModelDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1234,4 +1410,8 @@ export type UserModelDefaultArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the UserModel
    */
   omit?: Prisma.UserModelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserModelInclude<ExtArgs> | null
 }
