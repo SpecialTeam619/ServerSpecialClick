@@ -1,0 +1,21 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "maxWorkers": 1,
+  "testRegex": ".e2e-spec.ts$",
+  "moduleNameMapper": {
+    "^\\./enums\\.js$": "<rootDir>/../src/generated/prisma/enums.ts",
+    "^\\./internal/class\\.js$": "<rootDir>/../src/generated/prisma/internal/class.ts",
+    "^\\./internal/prismaNamespace\\.js$": "<rootDir>/../src/generated/prisma/internal/prismaNamespace.ts",
+    "^\\./internal/prismaNamespaceBrowser\\.js$": "<rootDir>/../src/generated/prisma/internal/prismaNamespaceBrowser.ts",
+    "^\\./commonInputTypes\\.js$": "<rootDir>/../src/generated/prisma/commonInputTypes.ts",
+    "^\\./models\\.js$": "<rootDir>/../src/generated/prisma/models.ts",
+    "^\\./models/User\\.js$": "<rootDir>/../src/generated/prisma/models/User.ts",
+    "^\\.\\./models\\.js$": "<rootDir>/../src/generated/prisma/models.ts",
+    "^\\.\\./internal/prismaNamespace\\.js$": "<rootDir>/../src/generated/prisma/internal/prismaNamespace.ts"
+  },
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
+}

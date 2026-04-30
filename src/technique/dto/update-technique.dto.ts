@@ -1,5 +1,13 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsIn,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 
 export class UpdateTechniqueDto {
   @ApiPropertyOptional({
@@ -44,6 +52,12 @@ export class UpdateTechniqueDto {
     description: 'Свойства техники',
   })
   @IsOptional()
-  @IsString({ message: 'Свойства должны быть строкой' })
+  @IsArray({ message: 'Свойства должны быть массивом строк' })
+  @ArrayMinSize(1, { message: 'Нужно указать хотя бы одно свойство' })
+  @IsString({ each: true, message: 'Каждое свойство должно быть строкой' })
+  @MaxLength(255, {
+    each: true,
+    message: 'Каждое свойство не должно превышать 255 символов',
+  })
   property?: string[];
 }
