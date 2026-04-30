@@ -1,29 +1,50 @@
 
-FROM node:22-slim AS development
+#Это называется ступенчатая сборка
 
-WORKDIR /usr/src/app
 
-COPY package.json /usr/src/app/package.json
-COPY package-lock.json /usr/src/app/package-lock.json
+
+#Общая сборка - донор!
+FROM node:20-alpine AS deps
+WORKDIR /app
+
+COPY package*.json ./
+COPY prisma ./prisma/
 RUN npm ci
 
-COPY . /usr/src/app
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
 
+
+
+#сборка dev
+FROM node:20-alpine AS dev
+WORKDIR /app
+COPY --chown=node:node --from=deps /app/node_modules ./node_modules
+COPY --chown=node:node . .
+USER node
+####
 EXPOSE 3000
+CMD ["npm", "run", "start:dev"]
 
-CMD [ "npm", "run", "start" ]
 
-FROM development as dev-envs
-RUN <<EOF
-apt-get update
-apt-get install -y --no-install-recommends git
-EOF
+#сборка прод
+FROM node:20-alpine AS production
+WORKDIR /app
 
-RUN <<EOF
-useradd -s /bin/bash -m vscode
-groupadd docker
-usermod -aG docker vscode
-EOF
-# install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
-CMD [ "npm", "run", "start" ]
+COPY --chown=node:node package*.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+COPY --chown=node:node --from=build /app/dist ./dist
+
+
+#Это необходимо для безопасности!
+# Создаём пользователя "node"
+# чтобы не иметь root прав
+
+USER node
+
+####
+EXPOSE 3000
+CMD ["node", "dist/main.js"]

@@ -1,0 +1,41 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+  LESSOR
+}
+
+enum Status {
+  IN_STOCK
+  RENTED
+}
+
+model User {
+  id         String      @id @default(uuid())
+  email      String      @unique
+  name       String
+  password   String
+  role       Role        @default(CUSTOMER)
+  techniques Technique[]
+}
+
+model Technique {
+  id          String    @id @default(uuid())
+  ownerId     String
+  owner       User      @relation(fields: [ownerId], references: [id])
+  name        String
+  description String
+  property    String[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  status      Status    @default(IN_STOCK)
+}

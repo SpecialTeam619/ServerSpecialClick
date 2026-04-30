@@ -1,0 +1,28 @@
+# node
+node_modules
+npm-debug.log
+yarn-error.log
+
+# build
+dist
+coverage
+
+# env
+.env
+.env.*
+
+# git
+.git
+.gitignore
+
+# docker
+Dockerfile
+docker-compose.yml
+docker-compose.*.yml
+
+# editor
+.vscode
+.idea
+
+# mac
+.DS_Store
