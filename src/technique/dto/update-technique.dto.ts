@@ -19,7 +19,7 @@ export class UpdateTechniqueDto {
   ownerId?: string;
 
   @ApiPropertyOptional({
-    example: 'Finish the project',
+    example: 'Экскаватор',
     description: 'Название техники',
   })
   @IsOptional()
@@ -28,7 +28,8 @@ export class UpdateTechniqueDto {
   name?: string;
 
   @ApiPropertyOptional({
-    example: 'Implement todo CRUD endpoints',
+    example:
+      'Эта техника поможет вам завершить проект вовремя и с высоким качеством',
     description: 'Описание техники',
   })
   @IsOptional()

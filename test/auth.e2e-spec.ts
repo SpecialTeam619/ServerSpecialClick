@@ -55,13 +55,13 @@ describe('AuthController (e2e)', () => {
     await app.close();
   });
   it('/POST register', () => {
-    const testEmail = `john.${Date.now()}.${Math.floor(Math.random() * 10000)}@example.com`;
+    const phone = `+7${Math.floor(1000000000 + Math.random() * 9000000000)}`;
 
     return request(app.getHttpServer() as import('http').Server)
       .post('/auth/register')
       .send({
         name: 'John Doe',
-        email: testEmail,
+        phone,
         password: 'password123',
       })
       .expect(201)

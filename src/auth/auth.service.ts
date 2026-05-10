@@ -24,7 +24,7 @@ export class AuthService {
     const payload: { sub: string; email: string } = {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       sub: user.id,
-      email: user.email,
+      email: user.phone,
     };
 
     return {
@@ -34,15 +34,16 @@ export class AuthService {
 
   async register(registerDto: RegisterDto): Promise<{ access_token: string }> {
     const user = await this.userService.createUser({
-      email: registerDto.email,
+      phone: registerDto.phone,
       name: registerDto.name,
       password: registerDto.password,
+      role: registerDto.role,
     });
 
     const payload: { sub: string; email: string } = {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       sub: user.id,
-      email: user.email,
+      email: user.phone,
     };
 
     return {

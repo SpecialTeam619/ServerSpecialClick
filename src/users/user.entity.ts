@@ -1,12 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
+import { Role } from '../generated/prisma/client';
 
 export class User {
   id: any;
   constructor(
     private _password: string,
-    private readonly _email: string,
+    private readonly _phone: string,
     private readonly _name: string,
+    private readonly _role: Role,
     passwordHash?: string,
   ) {
     if (passwordHash) {
@@ -14,11 +16,11 @@ export class User {
     }
   }
   @ApiProperty({
-    example: 'john@example.com',
-    description: 'The email of the user',
+    example: '+79991234567',
+    description: 'The phone number of the user',
   })
-  get email(): string {
-    return this._email;
+  get phone(): string {
+    return this._phone;
   }
 
   @ApiProperty({
@@ -27,6 +29,15 @@ export class User {
   })
   get name(): string {
     return this._name;
+  }
+
+  @ApiProperty({
+    enum: Role,
+    example: Role.CUSTOMER,
+    description: 'The role of the user',
+  })
+  get role(): Role {
+    return this._role;
   }
 
   @ApiProperty({

@@ -51,6 +51,15 @@ export class UserController {
     return this.userService.findAll(query);
   }
 
+  @Get('check/phone')
+  @ApiResponse({
+    status: 200,
+    description: 'Check if user exists.',
+  })
+  isUserExist(@Query('phone') phone: string) {
+    return this.userService.isUserExist({ phone });
+  }
+
   @Get(':id')
   @ApiResponse({
     status: 200,

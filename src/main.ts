@@ -9,10 +9,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
 
   const config = new DocumentBuilder()
-    .setTitle('Todo List API')
-    .setDescription('The Todo List backend API documentation')
+    .setTitle('SpecClick API')
+    .setDescription('The SpecClick backend API documentation')
     .setVersion('1.0')
-    .addTag('todos')
+    .addTag('techniques')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory());

@@ -55,10 +55,10 @@ describe('TechniqueController (e2e)', () => {
 
   async function createUserAndLogin(): Promise<{
     id: string;
-    email: string;
+    phone: string;
     token: string;
   }> {
-    const email = `john.${Date.now()}.${Math.floor(Math.random() * 10000)}@example.com`;
+    const phone = `+7${Math.floor(1000000000 + Math.random() * 9000000000)}`;
     const password = 'password123';
     const httpServer = app.getHttpServer() as import('http').Server;
 
@@ -66,7 +66,7 @@ describe('TechniqueController (e2e)', () => {
       .post('/users')
       .send({
         name: 'John Doe',
-        email,
+        phone,
         password,
       })
       .expect(201);
@@ -76,7 +76,7 @@ describe('TechniqueController (e2e)', () => {
     const loginResponse = await request(httpServer)
       .post('/auth/login')
       .send({
-        email,
+        phone,
         password,
       })
       .expect(200);
@@ -85,7 +85,7 @@ describe('TechniqueController (e2e)', () => {
 
     return {
       id: userId,
-      email,
+      phone,
       token,
     };
   }

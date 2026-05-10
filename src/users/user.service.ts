@@ -27,6 +27,17 @@ export class UserService extends UserCrudService {
     return super.findOne(id);
   }
 
+  async isUserExist(
+    phone: Prisma.UserWhereUniqueInput,
+  ): Promise<{ exists: boolean }> {
+    try {
+      await super.findOne(phone);
+      return { exists: true };
+    } catch {
+      return { exists: false };
+    }
+  }
+
   async update(
     id: Prisma.UserWhereUniqueInput,
     updateDto: UpdateUserDto,

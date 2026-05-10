@@ -3,7 +3,7 @@ import { ArrayMinSize, IsArray, IsString, MaxLength } from 'class-validator';
 
 export class CreateTechniqueDto {
   @ApiProperty({
-    example: 'Finish the project',
+    example: 'Экскаватор',
     description: 'Название техники',
   })
   @IsString({ message: 'Название должно быть строкой' })
@@ -11,7 +11,8 @@ export class CreateTechniqueDto {
   name!: string;
 
   @ApiProperty({
-    example: 'Implement todo CRUD endpoints',
+    example:
+      'Эта техника поможет вам завершить проект вовремя и с высоким качеством',
     description: 'Описание техники',
   })
   @IsString({ message: 'Описание должно быть строкой' })

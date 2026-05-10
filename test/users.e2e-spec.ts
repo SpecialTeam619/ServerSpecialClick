@@ -15,7 +15,7 @@ import { PrismaService } from '../src/prisma/prisma.service';
 interface CreateUserResponseBody {
   id: string;
   name: string;
-  email: string;
+  phone: string;
 }
 
 interface LoginResponseBody {
@@ -24,7 +24,7 @@ interface LoginResponseBody {
 
 interface AuthenticatedUserFixture {
   id: string;
-  email: string;
+  phone: string;
   token: string;
 }
 
@@ -54,7 +54,7 @@ describe('UserController (e2e)', () => {
   }
 
   async function createUserAndLogin(): Promise<AuthenticatedUserFixture> {
-    const email = `john.${Date.now()}.${Math.floor(Math.random() * 10000)}@example.com`;
+    const phone = `+71234567890`;
     const password = 'password123';
     const httpServer = app.getHttpServer() as import('http').Server;
 
@@ -62,7 +62,7 @@ describe('UserController (e2e)', () => {
       .post('/users')
       .send({
         name: 'John Doe',
-        email,
+        phone,
         password,
       })
       .expect(201);
@@ -72,7 +72,7 @@ describe('UserController (e2e)', () => {
     const loginResponse = await request(httpServer)
       .post('/auth/login')
       .send({
-        email,
+        phone,
         password,
       })
       .expect(200);
@@ -81,7 +81,7 @@ describe('UserController (e2e)', () => {
 
     return {
       id: userId,
-      email,
+      phone,
       token,
     };
   }
@@ -105,13 +105,13 @@ describe('UserController (e2e)', () => {
   });
 
   it('/POST users', () => {
-    const testEmail = `john.${Date.now()}.${Math.floor(Math.random() * 10000)}@example.com`;
+    const testphone = `+7${Math.floor(Math.random() * 10000000000)}`;
 
     return request(app.getHttpServer() as import('http').Server)
       .post('/users')
       .send({
         name: 'John Doe',
-        email: testEmail,
+        phone: testphone,
         password: 'password123',
       })
       .expect(201)
@@ -119,13 +119,13 @@ describe('UserController (e2e)', () => {
         expect(body).toMatchObject({
           id: expect.any(String),
           name: 'John Doe',
-          email: testEmail,
+          phone: testphone,
         });
       });
   });
 
   it('/GET users', async () => {
-    const { token, email } = await createUserAndLogin();
+    const { token, phone } = await createUserAndLogin();
 
     return request(app.getHttpServer() as import('http').Server)
       .get('/users')
@@ -137,7 +137,7 @@ describe('UserController (e2e)', () => {
             expect.objectContaining({
               id: expect.any(String),
               name: 'John Doe',
-              email,
+              phone,
             }),
           ]),
           meta: {
@@ -153,7 +153,7 @@ describe('UserController (e2e)', () => {
   });
 
   it('/GET users/:id', async () => {
-    const { id: userId, token, email } = await createUserAndLogin();
+    const { id: userId, token, phone } = await createUserAndLogin();
 
     return request(app.getHttpServer() as import('http').Server)
       .get(`/users/${userId}`)
@@ -163,13 +163,13 @@ describe('UserController (e2e)', () => {
         expect(body).toMatchObject({
           id: userId,
           name: 'John Doe',
-          email,
+          phone,
         });
       });
   });
 
   it('/PATCH users/:id', async () => {
-    const { id: userId, token, email } = await createUserAndLogin();
+    const { id: userId, token, phone } = await createUserAndLogin();
 
     return request(app.getHttpServer() as import('http').Server)
       .patch(`/users/${userId}`)
@@ -182,13 +182,13 @@ describe('UserController (e2e)', () => {
         expect(body).toMatchObject({
           id: userId,
           name: 'John Smith',
-          email,
+          phone,
         });
       });
   });
 
   it('/DELETE users/:id', async () => {
-    const { id: userId, token, email } = await createUserAndLogin();
+    const { id: userId, token, phone } = await createUserAndLogin();
 
     return request(app.getHttpServer() as import('http').Server)
       .delete(`/users/${userId}`)
@@ -198,7 +198,35 @@ describe('UserController (e2e)', () => {
         expect(body).toMatchObject({
           id: userId,
           name: 'John Doe',
-          email,
+          phone,
+        });
+      });
+  });
+
+  it('/CHECK check/phone/:phone true', async () => {
+    const { phone } = await createUserAndLogin();
+
+    return request(app.getHttpServer() as import('http').Server)
+      .get('/users/check/phone')
+      .query({ phone })
+      .expect(200)
+      .expect(({ body }) => {
+        expect(body).toMatchObject({
+          exists: true,
+        });
+      });
+  });
+
+  it('/CHECK check/phone/:phone false', async () => {
+    const phone = `+7${Math.floor(Math.random() * 10000000000)}`;
+
+    return request(app.getHttpServer() as import('http').Server)
+      .get('/users/check/phone')
+      .query({ phone })
+      .expect(200)
+      .expect(({ body }) => {
+        expect(body).toMatchObject({
+          exists: false,
         });
       });
   });

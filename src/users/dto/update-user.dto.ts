@@ -1,14 +1,15 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
+import { Role } from '../../generated/prisma/client';
 
 export class UpdateUserDto {
   @ApiPropertyOptional({
-    example: 'john@example.com',
-    description: 'The email of the user',
+    example: '+79991234567',
+    description: 'The phone number of the user',
   })
   @IsOptional()
-  @IsEmail({}, { message: 'Неверно указан email' })
-  email?: string;
+  @IsPhoneNumber('RU', { message: 'Номер телефона должен быть валидным' })
+  phone?: string;
 
   @ApiPropertyOptional({
     example: 'John Doe',
@@ -17,4 +18,13 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   name?: string;
+
+  @ApiPropertyOptional({
+    enum: Role,
+    example: Role.CUSTOMER,
+    description: 'The role of the user',
+  })
+  @IsOptional()
+  @IsEnum(Role, { message: 'Роль должна быть одним из допустимых значений' })
+  role?: Role;
 }

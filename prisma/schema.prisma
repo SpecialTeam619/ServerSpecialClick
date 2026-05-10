@@ -21,7 +21,7 @@ enum Status {
 
 model User {
   id         String      @id @default(uuid())
-  email      String      @unique
+  phone      String      @unique
   name       String
   password   String
   role       Role        @default(CUSTOMER)
@@ -29,13 +29,13 @@ model User {
 }
 
 model Technique {
-  id          String    @id @default(uuid())
+  id          String   @id @default(uuid())
   ownerId     String
-  owner       User      @relation(fields: [ownerId], references: [id])
+  owner       User     @relation(fields: [ownerId], references: [id])
   name        String
   description String
   property    String[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  status      Status    @default(IN_STOCK)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  status      Status   @default(IN_STOCK)
 }

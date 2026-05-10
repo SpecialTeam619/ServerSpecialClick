@@ -1,13 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import {
+  IsEnum,
+  IsOptional,
+  IsPhoneNumber,
+  IsString,
+  MinLength,
+} from 'class-validator';
+import { Role } from '../../generated/prisma/client';
 
 export class RegisterDto {
   @ApiProperty({
-    example: 'john@example.com',
-    description: 'The email of the user',
+    example: '+79991234567',
+    description: 'The phone number of the user',
   })
-  @IsEmail({}, { message: 'Неверно указан email' })
-  email!: string;
+  @IsPhoneNumber('RU', { message: 'Номер телефона должен быть валидным' })
+  phone!: string;
 
   @ApiProperty({
     example: 'John Doe',
@@ -24,4 +31,14 @@ export class RegisterDto {
   @IsString({ message: 'Пароль должен быть строкой' })
   @MinLength(6, { message: 'Пароль слишком короткий' })
   password!: string;
+
+  @ApiProperty({
+    enum: Role,
+    required: false,
+    example: Role.CUSTOMER,
+    description: 'The role of the user',
+  })
+  @IsOptional()
+  @IsEnum(Role, { message: 'Роль должна быть одним из допустимых значений' })
+  role?: Role;
 }

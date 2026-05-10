@@ -14,9 +14,9 @@ export class AuthController {
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: { email: string; password: string }) {
+  signIn(@Body() signInDto: { phone: string; password: string }) {
     return this.authService.signIn(
-      { email: signInDto.email },
+      { phone: signInDto.phone },
       signInDto.password,
     );
   }
