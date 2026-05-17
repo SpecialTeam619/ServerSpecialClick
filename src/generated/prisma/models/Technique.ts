@@ -31,7 +31,7 @@ export type TechniqueMinAggregateOutputType = {
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  status: $Enums.Status | null
+  status: $Enums.StatusTechnique | null
 }
 
 export type TechniqueMaxAggregateOutputType = {
@@ -41,7 +41,7 @@ export type TechniqueMaxAggregateOutputType = {
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  status: $Enums.Status | null
+  status: $Enums.StatusTechnique | null
 }
 
 export type TechniqueCountAggregateOutputType = {
@@ -169,7 +169,7 @@ export type TechniqueGroupByOutputType = {
   property: string[]
   createdAt: Date
   updatedAt: Date
-  status: $Enums.Status
+  status: $Enums.StatusTechnique
   _count: TechniqueCountAggregateOutputType | null
   _min: TechniqueMinAggregateOutputType | null
   _max: TechniqueMaxAggregateOutputType | null
@@ -201,7 +201,7 @@ export type TechniqueWhereInput = {
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
-  status?: Prisma.EnumStatusFilter<"Technique"> | $Enums.Status
+  status?: Prisma.EnumStatusTechniqueFilter<"Technique"> | $Enums.StatusTechnique
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -228,7 +228,7 @@ export type TechniqueWhereUniqueInput = Prisma.AtLeast<{
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
-  status?: Prisma.EnumStatusFilter<"Technique"> | $Enums.Status
+  status?: Prisma.EnumStatusTechniqueFilter<"Technique"> | $Enums.StatusTechnique
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
@@ -257,7 +257,7 @@ export type TechniqueScalarWhereWithAggregatesInput = {
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Technique"> | Date | string
-  status?: Prisma.EnumStatusWithAggregatesFilter<"Technique"> | $Enums.Status
+  status?: Prisma.EnumStatusTechniqueWithAggregatesFilter<"Technique"> | $Enums.StatusTechnique
 }
 
 export type TechniqueCreateInput = {
@@ -267,7 +267,7 @@ export type TechniqueCreateInput = {
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  status?: $Enums.Status
+  status?: $Enums.StatusTechnique
   owner: Prisma.UserCreateNestedOneWithoutTechniquesInput
 }
 
@@ -279,7 +279,7 @@ export type TechniqueUncheckedCreateInput = {
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  status?: $Enums.Status
+  status?: $Enums.StatusTechnique
 }
 
 export type TechniqueUpdateInput = {
@@ -289,7 +289,7 @@ export type TechniqueUpdateInput = {
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
   owner?: Prisma.UserUpdateOneRequiredWithoutTechniquesNestedInput
 }
 
@@ -301,7 +301,7 @@ export type TechniqueUncheckedUpdateInput = {
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
 }
 
 export type TechniqueCreateManyInput = {
@@ -312,7 +312,7 @@ export type TechniqueCreateManyInput = {
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  status?: $Enums.Status
+  status?: $Enums.StatusTechnique
 }
 
 export type TechniqueUpdateManyMutationInput = {
@@ -322,7 +322,7 @@ export type TechniqueUpdateManyMutationInput = {
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
 }
 
 export type TechniqueUncheckedUpdateManyInput = {
@@ -333,7 +333,7 @@ export type TechniqueUncheckedUpdateManyInput = {
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
 }
 
 export type TechniqueListRelationFilter = {
@@ -440,8 +440,8 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
-export type EnumStatusFieldUpdateOperationsInput = {
-  set?: $Enums.Status
+export type EnumStatusTechniqueFieldUpdateOperationsInput = {
+  set?: $Enums.StatusTechnique
 }
 
 export type TechniqueCreateWithoutOwnerInput = {
@@ -451,7 +451,7 @@ export type TechniqueCreateWithoutOwnerInput = {
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  status?: $Enums.Status
+  status?: $Enums.StatusTechnique
 }
 
 export type TechniqueUncheckedCreateWithoutOwnerInput = {
@@ -461,7 +461,7 @@ export type TechniqueUncheckedCreateWithoutOwnerInput = {
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  status?: $Enums.Status
+  status?: $Enums.StatusTechnique
 }
 
 export type TechniqueCreateOrConnectWithoutOwnerInput = {
@@ -501,7 +501,7 @@ export type TechniqueScalarWhereInput = {
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
-  status?: Prisma.EnumStatusFilter<"Technique"> | $Enums.Status
+  status?: Prisma.EnumStatusTechniqueFilter<"Technique"> | $Enums.StatusTechnique
 }
 
 export type TechniqueCreateManyOwnerInput = {
@@ -511,7 +511,7 @@ export type TechniqueCreateManyOwnerInput = {
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
-  status?: $Enums.Status
+  status?: $Enums.StatusTechnique
 }
 
 export type TechniqueUpdateWithoutOwnerInput = {
@@ -521,7 +521,7 @@ export type TechniqueUpdateWithoutOwnerInput = {
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
 }
 
 export type TechniqueUncheckedUpdateWithoutOwnerInput = {
@@ -531,7 +531,7 @@ export type TechniqueUncheckedUpdateWithoutOwnerInput = {
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
 }
 
 export type TechniqueUncheckedUpdateManyWithoutOwnerInput = {
@@ -541,7 +541,7 @@ export type TechniqueUncheckedUpdateManyWithoutOwnerInput = {
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
 }
 
 
@@ -617,7 +617,7 @@ export type $TechniquePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     property: string[]
     createdAt: Date
     updatedAt: Date
-    status: $Enums.Status
+    status: $Enums.StatusTechnique
   }, ExtArgs["result"]["technique"]>
   composites: {}
 }
@@ -1049,7 +1049,7 @@ export interface TechniqueFieldRefs {
   readonly property: Prisma.FieldRef<"Technique", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Technique", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Technique", 'DateTime'>
-  readonly status: Prisma.FieldRef<"Technique", 'Status'>
+  readonly status: Prisma.FieldRef<"Technique", 'StatusTechnique'>
 }
     
 

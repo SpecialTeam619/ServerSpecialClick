@@ -18,9 +18,19 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
-export const Status = {
+export const StatusTechnique = {
   IN_STOCK: 'IN_STOCK',
   RENTED: 'RENTED'
 } as const
 
-export type Status = (typeof Status)[keyof typeof Status]
+export type StatusTechnique = (typeof StatusTechnique)[keyof typeof StatusTechnique]
+
+
+export const StatusOrder = {
+  AWAITING: 'AWAITING',
+  ON_THE_WAY: 'ON_THE_WAY',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type StatusOrder = (typeof StatusOrder)[keyof typeof StatusOrder]

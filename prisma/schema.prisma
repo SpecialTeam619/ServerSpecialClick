@@ -14,28 +14,54 @@ enum Role {
   LESSOR
 }
 
-enum Status {
+enum StatusTechnique {
   IN_STOCK
   RENTED
 }
 
+enum StatusOrder {
+  AWAITING
+  ON_THE_WAY
+  IN_PROGRESS
+  COMPLETED
+}
+
 model User {
-  id         String      @id @default(uuid())
-  phone      String      @unique
-  name       String
-  password   String
-  role       Role        @default(CUSTOMER)
-  techniques Technique[]
+  id       String @id @default(uuid())
+  phone    String @unique
+  name     String
+  password String
+  role     Role   @default(CUSTOMER)
+
+  // Техника, которой владеет этот пользователь (если он арендодатель)
+  techniques Technique[] @relation("UserTechniques")
+
+  // Заказы, где пользователь выступает в роли заказчика
+  customerOrders Order[] @relation("CustomerOrders")
+
+  // Заказы, где пользователь выступает в роли арендодателя
+  lessorOrders Order[] @relation("LessorOrders")
 }
 
 model Technique {
-  id          String   @id @default(uuid())
+  id          String          @id @default(uuid())
   ownerId     String
-  owner       User     @relation(fields: [ownerId], references: [id])
+  owner       User            @relation("UserTechniques", fields: [ownerId], references: [id])
   name        String
   description String
   property    String[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  status      Status   @default(IN_STOCK)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  status      StatusTechnique @default(IN_STOCK)
+}
+
+model Order {
+  id         String      @id @default(uuid())
+  customerId String
+  customer   User        @relation("CustomerOrders", fields: [customerId], references: [id])
+  lessorId   String
+  lessor     User        @relation("LessorOrders", fields: [lessorId], references: [id])
+  status     StatusOrder @default(AWAITING)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 }

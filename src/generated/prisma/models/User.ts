@@ -183,6 +183,8 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   techniques?: Prisma.TechniqueListRelationFilter
+  customerOrders?: Prisma.OrderListRelationFilter
+  lessorOrders?: Prisma.OrderListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -192,6 +194,8 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   techniques?: Prisma.TechniqueOrderByRelationAggregateInput
+  customerOrders?: Prisma.OrderOrderByRelationAggregateInput
+  lessorOrders?: Prisma.OrderOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -204,6 +208,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   techniques?: Prisma.TechniqueListRelationFilter
+  customerOrders?: Prisma.OrderListRelationFilter
+  lessorOrders?: Prisma.OrderListRelationFilter
 }, "id" | "phone">
 
 export type UserOrderByWithAggregationInput = {
@@ -235,6 +241,8 @@ export type UserCreateInput = {
   password: string
   role?: $Enums.Role
   techniques?: Prisma.TechniqueCreateNestedManyWithoutOwnerInput
+  customerOrders?: Prisma.OrderCreateNestedManyWithoutCustomerInput
+  lessorOrders?: Prisma.OrderCreateNestedManyWithoutLessorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -244,6 +252,8 @@ export type UserUncheckedCreateInput = {
   password: string
   role?: $Enums.Role
   techniques?: Prisma.TechniqueUncheckedCreateNestedManyWithoutOwnerInput
+  customerOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCustomerInput
+  lessorOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutLessorInput
 }
 
 export type UserUpdateInput = {
@@ -253,6 +263,8 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   techniques?: Prisma.TechniqueUpdateManyWithoutOwnerNestedInput
+  customerOrders?: Prisma.OrderUpdateManyWithoutCustomerNestedInput
+  lessorOrders?: Prisma.OrderUpdateManyWithoutLessorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -262,6 +274,8 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   techniques?: Prisma.TechniqueUncheckedUpdateManyWithoutOwnerNestedInput
+  customerOrders?: Prisma.OrderUncheckedUpdateManyWithoutCustomerNestedInput
+  lessorOrders?: Prisma.OrderUncheckedUpdateManyWithoutLessorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -339,12 +353,42 @@ export type UserUpdateOneRequiredWithoutTechniquesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTechniquesInput, Prisma.UserUpdateWithoutTechniquesInput>, Prisma.UserUncheckedUpdateWithoutTechniquesInput>
 }
 
+export type UserCreateNestedOneWithoutCustomerOrdersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCustomerOrdersInput, Prisma.UserUncheckedCreateWithoutCustomerOrdersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCustomerOrdersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutLessorOrdersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLessorOrdersInput, Prisma.UserUncheckedCreateWithoutLessorOrdersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLessorOrdersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCustomerOrdersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCustomerOrdersInput, Prisma.UserUncheckedCreateWithoutCustomerOrdersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCustomerOrdersInput
+  upsert?: Prisma.UserUpsertWithoutCustomerOrdersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCustomerOrdersInput, Prisma.UserUpdateWithoutCustomerOrdersInput>, Prisma.UserUncheckedUpdateWithoutCustomerOrdersInput>
+}
+
+export type UserUpdateOneRequiredWithoutLessorOrdersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLessorOrdersInput, Prisma.UserUncheckedCreateWithoutLessorOrdersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLessorOrdersInput
+  upsert?: Prisma.UserUpsertWithoutLessorOrdersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLessorOrdersInput, Prisma.UserUpdateWithoutLessorOrdersInput>, Prisma.UserUncheckedUpdateWithoutLessorOrdersInput>
+}
+
 export type UserCreateWithoutTechniquesInput = {
   id?: string
   phone: string
   name: string
   password: string
   role?: $Enums.Role
+  customerOrders?: Prisma.OrderCreateNestedManyWithoutCustomerInput
+  lessorOrders?: Prisma.OrderCreateNestedManyWithoutLessorInput
 }
 
 export type UserUncheckedCreateWithoutTechniquesInput = {
@@ -353,6 +397,8 @@ export type UserUncheckedCreateWithoutTechniquesInput = {
   name: string
   password: string
   role?: $Enums.Role
+  customerOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCustomerInput
+  lessorOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutLessorInput
 }
 
 export type UserCreateOrConnectWithoutTechniquesInput = {
@@ -377,6 +423,8 @@ export type UserUpdateWithoutTechniquesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  customerOrders?: Prisma.OrderUpdateManyWithoutCustomerNestedInput
+  lessorOrders?: Prisma.OrderUpdateManyWithoutLessorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTechniquesInput = {
@@ -385,6 +433,120 @@ export type UserUncheckedUpdateWithoutTechniquesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  customerOrders?: Prisma.OrderUncheckedUpdateManyWithoutCustomerNestedInput
+  lessorOrders?: Prisma.OrderUncheckedUpdateManyWithoutLessorNestedInput
+}
+
+export type UserCreateWithoutCustomerOrdersInput = {
+  id?: string
+  phone: string
+  name: string
+  password: string
+  role?: $Enums.Role
+  techniques?: Prisma.TechniqueCreateNestedManyWithoutOwnerInput
+  lessorOrders?: Prisma.OrderCreateNestedManyWithoutLessorInput
+}
+
+export type UserUncheckedCreateWithoutCustomerOrdersInput = {
+  id?: string
+  phone: string
+  name: string
+  password: string
+  role?: $Enums.Role
+  techniques?: Prisma.TechniqueUncheckedCreateNestedManyWithoutOwnerInput
+  lessorOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutLessorInput
+}
+
+export type UserCreateOrConnectWithoutCustomerOrdersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCustomerOrdersInput, Prisma.UserUncheckedCreateWithoutCustomerOrdersInput>
+}
+
+export type UserCreateWithoutLessorOrdersInput = {
+  id?: string
+  phone: string
+  name: string
+  password: string
+  role?: $Enums.Role
+  techniques?: Prisma.TechniqueCreateNestedManyWithoutOwnerInput
+  customerOrders?: Prisma.OrderCreateNestedManyWithoutCustomerInput
+}
+
+export type UserUncheckedCreateWithoutLessorOrdersInput = {
+  id?: string
+  phone: string
+  name: string
+  password: string
+  role?: $Enums.Role
+  techniques?: Prisma.TechniqueUncheckedCreateNestedManyWithoutOwnerInput
+  customerOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCustomerInput
+}
+
+export type UserCreateOrConnectWithoutLessorOrdersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLessorOrdersInput, Prisma.UserUncheckedCreateWithoutLessorOrdersInput>
+}
+
+export type UserUpsertWithoutCustomerOrdersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCustomerOrdersInput, Prisma.UserUncheckedUpdateWithoutCustomerOrdersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCustomerOrdersInput, Prisma.UserUncheckedCreateWithoutCustomerOrdersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCustomerOrdersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCustomerOrdersInput, Prisma.UserUncheckedUpdateWithoutCustomerOrdersInput>
+}
+
+export type UserUpdateWithoutCustomerOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  techniques?: Prisma.TechniqueUpdateManyWithoutOwnerNestedInput
+  lessorOrders?: Prisma.OrderUpdateManyWithoutLessorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCustomerOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  techniques?: Prisma.TechniqueUncheckedUpdateManyWithoutOwnerNestedInput
+  lessorOrders?: Prisma.OrderUncheckedUpdateManyWithoutLessorNestedInput
+}
+
+export type UserUpsertWithoutLessorOrdersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLessorOrdersInput, Prisma.UserUncheckedUpdateWithoutLessorOrdersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLessorOrdersInput, Prisma.UserUncheckedCreateWithoutLessorOrdersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLessorOrdersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLessorOrdersInput, Prisma.UserUncheckedUpdateWithoutLessorOrdersInput>
+}
+
+export type UserUpdateWithoutLessorOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  techniques?: Prisma.TechniqueUpdateManyWithoutOwnerNestedInput
+  customerOrders?: Prisma.OrderUpdateManyWithoutCustomerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLessorOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  techniques?: Prisma.TechniqueUncheckedUpdateManyWithoutOwnerNestedInput
+  customerOrders?: Prisma.OrderUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 
@@ -394,10 +556,14 @@ export type UserUncheckedUpdateWithoutTechniquesInput = {
 
 export type UserCountOutputType = {
   techniques: number
+  customerOrders: number
+  lessorOrders: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   techniques?: boolean | UserCountOutputTypeCountTechniquesArgs
+  customerOrders?: boolean | UserCountOutputTypeCountCustomerOrdersArgs
+  lessorOrders?: boolean | UserCountOutputTypeCountLessorOrdersArgs
 }
 
 /**
@@ -417,6 +583,20 @@ export type UserCountOutputTypeCountTechniquesArgs<ExtArgs extends runtime.Types
   where?: Prisma.TechniqueWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCustomerOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLessorOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -425,6 +605,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   role?: boolean
   techniques?: boolean | Prisma.User$techniquesArgs<ExtArgs>
+  customerOrders?: boolean | Prisma.User$customerOrdersArgs<ExtArgs>
+  lessorOrders?: boolean | Prisma.User$lessorOrdersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -455,6 +637,8 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "phone" | "name" | "password" | "role", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   techniques?: boolean | Prisma.User$techniquesArgs<ExtArgs>
+  customerOrders?: boolean | Prisma.User$customerOrdersArgs<ExtArgs>
+  lessorOrders?: boolean | Prisma.User$lessorOrdersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -464,6 +648,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     techniques: Prisma.$TechniquePayload<ExtArgs>[]
+    customerOrders: Prisma.$OrderPayload<ExtArgs>[]
+    lessorOrders: Prisma.$OrderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -866,6 +1052,8 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   techniques<T extends Prisma.User$techniquesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$techniquesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TechniquePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  customerOrders<T extends Prisma.User$customerOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$customerOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lessorOrders<T extends Prisma.User$lessorOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lessorOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1314,6 +1502,54 @@ export type User$techniquesArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.TechniqueScalarFieldEnum | Prisma.TechniqueScalarFieldEnum[]
+}
+
+/**
+ * User.customerOrders
+ */
+export type User$customerOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
+  orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[]
+  cursor?: Prisma.OrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
+}
+
+/**
+ * User.lessorOrders
+ */
+export type User$lessorOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
+  orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[]
+  cursor?: Prisma.OrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
 }
 
 /**

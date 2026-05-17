@@ -64,6 +64,12 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'The user has been successfully retrieved.',
+    example: {
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      phone: '+79991234567',
+      name: 'John Doe',
+      role: 'CUSTOMER',
+    },
   })
   @ApiResponse({ status: 404, description: 'User not found.' })
   @UseGuards(AuthGuard)

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Status } from '../generated/prisma/client';
+import { StatusTechnique } from '../generated/prisma/client';
 
 export class Technique {
   @ApiProperty({
@@ -45,9 +45,9 @@ export class Technique {
   updatedAt!: Date;
 
   @ApiProperty({
-    enum: Status,
-    example: 'RENTED',
+    enum: ['IN_STOCK'],
+    example: 'IN_STOCK',
     description: 'Статус техники',
   })
-  status!: Status;
+  status!: StatusTechnique;
 }

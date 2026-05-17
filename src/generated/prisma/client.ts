@@ -49,3 +49,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Technique = Prisma.TechniqueModel
+/**
+ * Model Order
+ * 
+ */
+export type Order = Prisma.OrderModel
