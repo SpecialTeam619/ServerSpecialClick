@@ -11,6 +11,18 @@ export class CreateTechniqueDto {
   name!: string;
 
   @ApiProperty({
+    example: 'Автовышка',
+    description: 'Тип техники',
+  })
+  @ApiProperty({
+    example: 'f6e9d5a5-5ad5-4f4d-8b2b-9794b062f2d4',
+    description: 'ID типа техники (techniqueTypeId)',
+  })
+  @IsString({ message: 'ID типа должен быть строкой' })
+  @MaxLength(255, { message: 'ID типа слишком длинный' })
+  techniqueTypeId!: string;
+
+  @ApiProperty({
     example:
       'Эта техника поможет вам завершить проект вовремя и с высоким качеством',
     description: 'Описание техники',

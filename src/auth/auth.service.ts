@@ -21,10 +21,11 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload: { sub: string; email: string } = {
+    const payload: { sub: string; email: string; role: string } = {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       sub: user.id,
       email: user.phone,
+      role: user.role,
     };
 
     return {
@@ -40,10 +41,11 @@ export class AuthService {
       role: registerDto.role,
     });
 
-    const payload: { sub: string; email: string } = {
+    const payload: { sub: string; email: string; role: string } = {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       sub: user.id,
       email: user.phone,
+      role: user.role,
     };
 
     return {

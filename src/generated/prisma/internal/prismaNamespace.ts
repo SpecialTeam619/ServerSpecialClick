@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  TechniqueType: 'TechniqueType',
   Technique: 'Technique',
   Order: 'Order'
 } as const
@@ -402,7 +403,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "technique" | "order"
+    modelProps: "user" | "techniqueType" | "technique" | "order"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -477,6 +478,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    TechniqueType: {
+      payload: Prisma.$TechniqueTypePayload<ExtArgs>
+      fields: Prisma.TechniqueTypeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TechniqueTypeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechniqueTypePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TechniqueTypeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechniqueTypePayload>
+        }
+        findFirst: {
+          args: Prisma.TechniqueTypeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechniqueTypePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TechniqueTypeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechniqueTypePayload>
+        }
+        findMany: {
+          args: Prisma.TechniqueTypeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechniqueTypePayload>[]
+        }
+        create: {
+          args: Prisma.TechniqueTypeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechniqueTypePayload>
+        }
+        createMany: {
+          args: Prisma.TechniqueTypeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TechniqueTypeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechniqueTypePayload>[]
+        }
+        delete: {
+          args: Prisma.TechniqueTypeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechniqueTypePayload>
+        }
+        update: {
+          args: Prisma.TechniqueTypeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechniqueTypePayload>
+        }
+        deleteMany: {
+          args: Prisma.TechniqueTypeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TechniqueTypeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TechniqueTypeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechniqueTypePayload>[]
+        }
+        upsert: {
+          args: Prisma.TechniqueTypeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechniqueTypePayload>
+        }
+        aggregate: {
+          args: Prisma.TechniqueTypeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTechniqueType>
+        }
+        groupBy: {
+          args: Prisma.TechniqueTypeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TechniqueTypeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TechniqueTypeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TechniqueTypeCountAggregateOutputType> | number
         }
       }
     }
@@ -678,10 +753,25 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const TechniqueTypeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  photoUrl: 'photoUrl',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TechniqueTypeScalarFieldEnum = (typeof TechniqueTypeScalarFieldEnum)[keyof typeof TechniqueTypeScalarFieldEnum]
+
+
 export const TechniqueScalarFieldEnum = {
   id: 'id',
   ownerId: 'ownerId',
   name: 'name',
+  techniqueTypeId: 'techniqueTypeId',
   description: 'description',
   property: 'property',
   createdAt: 'createdAt',
@@ -720,6 +810,14 @@ export const QueryMode = {
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
 
 /**
  * Field references
@@ -751,6 +849,13 @@ export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'Role[]'
  */
 export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -905,6 +1010,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  techniqueType?: Prisma.TechniqueTypeOmit
   technique?: Prisma.TechniqueOmit
   order?: Prisma.OrderOmit
 }

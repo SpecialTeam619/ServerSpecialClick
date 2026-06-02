@@ -71,4 +71,46 @@ describe('AuthController (e2e)', () => {
         });
       });
   });
+
+  it('/POST login - success', async () => {
+    const phone = `+7${Math.floor(1000000000 + Math.random() * 9000000000)}`;
+    const password = 'password123';
+
+    // register first
+    await request(app.getHttpServer() as import('http').Server)
+      .post('/auth/register')
+      .send({ name: 'John Doe', phone, password })
+      .expect(201);
+
+    return request(app.getHttpServer() as import('http').Server)
+      .post('/auth/login')
+      .send({ phone, password })
+      .expect(200)
+      .expect(({ body }) => {
+        expect(body).toMatchObject({ access_token: expect.any(String) });
+      });
+  });
+
+  it('/POST login - wrong password', async () => {
+    const phone = `+7${Math.floor(1000000000 + Math.random() * 9000000000)}`;
+
+    await request(app.getHttpServer() as import('http').Server)
+      .post('/auth/register')
+      .send({ name: 'John Doe', phone, password: 'password123' })
+      .expect(201);
+
+    return request(app.getHttpServer() as import('http').Server)
+      .post('/auth/login')
+      .send({ phone, password: 'wrongpassword' })
+      .expect(401);
+  });
+
+  it('/POST login - user not found', () => {
+    const phone = `+7${Math.floor(1000000000 + Math.random() * 9000000000)}`;
+
+    return request(app.getHttpServer() as import('http').Server)
+      .post('/auth/login')
+      .send({ phone, password: 'doesntmatter' })
+      .expect(404);
+  });
 });

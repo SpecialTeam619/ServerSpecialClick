@@ -28,6 +28,15 @@ export class UpdateTechniqueDto {
   name?: string;
 
   @ApiPropertyOptional({
+    example: 'Автовышка',
+    description: 'Тип техники',
+  })
+  @IsOptional()
+  @IsString({ message: 'ID типа должен быть строкой' })
+  @MaxLength(255, { message: 'ID типа слишком длинный' })
+  techniqueTypeId?: string;
+
+  @ApiPropertyOptional({
     example:
       'Эта техника поможет вам завершить проект вовремя и с высоким качеством',
     description: 'Описание техники',

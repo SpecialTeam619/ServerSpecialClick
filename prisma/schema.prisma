@@ -43,16 +43,31 @@ model User {
   lessorOrders Order[] @relation("LessorOrders")
 }
 
-model Technique {
-  id          String          @id @default(uuid())
-  ownerId     String
-  owner       User            @relation("UserTechniques", fields: [ownerId], references: [id])
+model TechniqueType {
+  id          String   @id @default(uuid())
+  code        String   @unique
   name        String
-  description String
-  property    String[]
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
-  status      StatusTechnique @default(IN_STOCK)
+  description String?
+  photoUrl    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  techniques Technique[]
+}
+
+model Technique {
+  id              String          @id @default(uuid())
+  ownerId         String
+  owner           User            @relation("UserTechniques", fields: [ownerId], references: [id])
+  name            String
+  techniqueTypeId String
+  techniqueType   TechniqueType   @relation(fields: [techniqueTypeId], references: [id])
+  description     String
+  property        String[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  status          StatusTechnique @default(IN_STOCK)
 }
 
 model Order {

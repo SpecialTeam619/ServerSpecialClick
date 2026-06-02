@@ -10,7 +10,9 @@ import databaseConfig from './config/database.config';
 import { validateEnv } from './config/validate-env';
 import { UserModule } from './users/user.module';
 import { TechniqueModule } from './technique/technique.module';
+import { TechniqueTypeModule } from './technique-type/technique-type.module';
 import { AuthModule } from './auth/auth.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { AuthModule } from './auth/auth.module';
     PrismaModule,
     UserModule,
     TechniqueModule,
+    TechniqueTypeModule,
+    OrderModule,
     AuthModule,
   ],
   controllers: [AppController],

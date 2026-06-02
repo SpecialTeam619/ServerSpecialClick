@@ -15,13 +15,25 @@ export class Technique {
   ownerId!: string;
 
   @ApiProperty({
-    example: 'Finish the project',
+    example: 'УРАЛ 4320',
     description: 'Название техники',
   })
   name!: string;
 
   @ApiProperty({
-    example: 'Implement todo CRUD endpoints',
+    example: 'f6e9d5a5-5ad5-4f4d-8b2b-9794b062f2d4',
+    description: 'ID типа техники (techniqueTypeId)',
+  })
+  techniqueTypeId!: string;
+
+  @ApiProperty({
+    example: { id: 'id', code: 'CRANE', name: 'Автовышка' },
+    description: 'Метаданные типа техники',
+  })
+  techniqueType?: unknown;
+
+  @ApiProperty({
+    example: 'Автовышка 32м с корзиной для подъема людей',
     description: 'Описание техники',
   })
   description!: string;

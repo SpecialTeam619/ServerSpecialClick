@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  TechniqueType: 'TechniqueType',
   Technique: 'Technique',
   Order: 'Order'
 } as const
@@ -83,10 +84,25 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const TechniqueTypeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  photoUrl: 'photoUrl',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TechniqueTypeScalarFieldEnum = (typeof TechniqueTypeScalarFieldEnum)[keyof typeof TechniqueTypeScalarFieldEnum]
+
+
 export const TechniqueScalarFieldEnum = {
   id: 'id',
   ownerId: 'ownerId',
   name: 'name',
+  techniqueTypeId: 'techniqueTypeId',
   description: 'description',
   property: 'property',
   createdAt: 'createdAt',
@@ -123,4 +139,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
