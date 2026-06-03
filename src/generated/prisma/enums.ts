@@ -28,6 +28,7 @@ export type StatusTechnique = (typeof StatusTechnique)[keyof typeof StatusTechni
 
 export const StatusOrder = {
   AWAITING: 'AWAITING',
+  REJECTED: 'REJECTED',
   ON_THE_WAY: 'ON_THE_WAY',
   IN_PROGRESS: 'IN_PROGRESS',
   COMPLETED: 'COMPLETED'

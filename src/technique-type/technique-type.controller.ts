@@ -20,7 +20,6 @@ import { Role } from '../generated/prisma/client';
 @ApiTags('technique-types')
 @Controller('technique-types')
 @UseGuards(AuthGuard, RolesGuard)
-@Roles(Role.ADMIN)
 export class TechniqueTypeController {
   constructor(private readonly service: TechniqueTypeService) {}
 
@@ -34,16 +33,19 @@ export class TechniqueTypeController {
     return this.service.findOne({ id });
   }
 
+  @Roles(Role.ADMIN)
   @Post()
   create(@Body() dto: CreateTechniqueTypeDto) {
     return this.service.create(dto);
   }
 
+  @Roles(Role.ADMIN)
   @Patch(':id')
   update(@Param('id') id: string, @Body() dto: UpdateTechniqueTypeDto) {
     return this.service.update({ id }, dto);
   }
 
+  @Roles(Role.ADMIN)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.service.remove({ id });

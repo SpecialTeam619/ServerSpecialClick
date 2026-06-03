@@ -22,7 +22,6 @@ export class AuthService {
     }
 
     const payload: { sub: string; email: string; role: string } = {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       sub: user.id,
       email: user.phone,
       role: user.role,
@@ -42,7 +41,6 @@ export class AuthService {
     });
 
     const payload: { sub: string; email: string; role: string } = {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       sub: user.id,
       email: user.phone,
       role: user.role,

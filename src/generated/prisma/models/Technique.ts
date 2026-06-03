@@ -212,6 +212,7 @@ export type TechniqueWhereInput = {
   status?: Prisma.EnumStatusTechniqueFilter<"Technique"> | $Enums.StatusTechnique
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   techniqueType?: Prisma.XOR<Prisma.TechniqueTypeScalarRelationFilter, Prisma.TechniqueTypeWhereInput>
+  orders?: Prisma.OrderListRelationFilter
 }
 
 export type TechniqueOrderByWithRelationInput = {
@@ -226,6 +227,7 @@ export type TechniqueOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   owner?: Prisma.UserOrderByWithRelationInput
   techniqueType?: Prisma.TechniqueTypeOrderByWithRelationInput
+  orders?: Prisma.OrderOrderByRelationAggregateInput
 }
 
 export type TechniqueWhereUniqueInput = Prisma.AtLeast<{
@@ -243,6 +245,7 @@ export type TechniqueWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumStatusTechniqueFilter<"Technique"> | $Enums.StatusTechnique
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   techniqueType?: Prisma.XOR<Prisma.TechniqueTypeScalarRelationFilter, Prisma.TechniqueTypeWhereInput>
+  orders?: Prisma.OrderListRelationFilter
 }, "id">
 
 export type TechniqueOrderByWithAggregationInput = {
@@ -285,6 +288,7 @@ export type TechniqueCreateInput = {
   status?: $Enums.StatusTechnique
   owner: Prisma.UserCreateNestedOneWithoutTechniquesInput
   techniqueType: Prisma.TechniqueTypeCreateNestedOneWithoutTechniquesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTechniqueInput
 }
 
 export type TechniqueUncheckedCreateInput = {
@@ -297,6 +301,7 @@ export type TechniqueUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.StatusTechnique
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTechniqueInput
 }
 
 export type TechniqueUpdateInput = {
@@ -309,6 +314,7 @@ export type TechniqueUpdateInput = {
   status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
   owner?: Prisma.UserUpdateOneRequiredWithoutTechniquesNestedInput
   techniqueType?: Prisma.TechniqueTypeUpdateOneRequiredWithoutTechniquesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTechniqueNestedInput
 }
 
 export type TechniqueUncheckedUpdateInput = {
@@ -321,6 +327,7 @@ export type TechniqueUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTechniqueNestedInput
 }
 
 export type TechniqueCreateManyInput = {
@@ -407,6 +414,11 @@ export type TechniqueMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+}
+
+export type TechniqueNullableScalarRelationFilter = {
+  is?: Prisma.TechniqueWhereInput | null
+  isNot?: Prisma.TechniqueWhereInput | null
 }
 
 export type TechniqueCreateNestedManyWithoutOwnerInput = {
@@ -506,6 +518,22 @@ export type EnumStatusTechniqueFieldUpdateOperationsInput = {
   set?: $Enums.StatusTechnique
 }
 
+export type TechniqueCreateNestedOneWithoutOrdersInput = {
+  create?: Prisma.XOR<Prisma.TechniqueCreateWithoutOrdersInput, Prisma.TechniqueUncheckedCreateWithoutOrdersInput>
+  connectOrCreate?: Prisma.TechniqueCreateOrConnectWithoutOrdersInput
+  connect?: Prisma.TechniqueWhereUniqueInput
+}
+
+export type TechniqueUpdateOneWithoutOrdersNestedInput = {
+  create?: Prisma.XOR<Prisma.TechniqueCreateWithoutOrdersInput, Prisma.TechniqueUncheckedCreateWithoutOrdersInput>
+  connectOrCreate?: Prisma.TechniqueCreateOrConnectWithoutOrdersInput
+  upsert?: Prisma.TechniqueUpsertWithoutOrdersInput
+  disconnect?: Prisma.TechniqueWhereInput | boolean
+  delete?: Prisma.TechniqueWhereInput | boolean
+  connect?: Prisma.TechniqueWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TechniqueUpdateToOneWithWhereWithoutOrdersInput, Prisma.TechniqueUpdateWithoutOrdersInput>, Prisma.TechniqueUncheckedUpdateWithoutOrdersInput>
+}
+
 export type TechniqueCreateWithoutOwnerInput = {
   id?: string
   name: string
@@ -515,6 +543,7 @@ export type TechniqueCreateWithoutOwnerInput = {
   updatedAt?: Date | string
   status?: $Enums.StatusTechnique
   techniqueType: Prisma.TechniqueTypeCreateNestedOneWithoutTechniquesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTechniqueInput
 }
 
 export type TechniqueUncheckedCreateWithoutOwnerInput = {
@@ -526,6 +555,7 @@ export type TechniqueUncheckedCreateWithoutOwnerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.StatusTechnique
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTechniqueInput
 }
 
 export type TechniqueCreateOrConnectWithoutOwnerInput = {
@@ -578,6 +608,7 @@ export type TechniqueCreateWithoutTechniqueTypeInput = {
   updatedAt?: Date | string
   status?: $Enums.StatusTechnique
   owner: Prisma.UserCreateNestedOneWithoutTechniquesInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTechniqueInput
 }
 
 export type TechniqueUncheckedCreateWithoutTechniqueTypeInput = {
@@ -589,6 +620,7 @@ export type TechniqueUncheckedCreateWithoutTechniqueTypeInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.StatusTechnique
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTechniqueInput
 }
 
 export type TechniqueCreateOrConnectWithoutTechniqueTypeInput = {
@@ -617,6 +649,70 @@ export type TechniqueUpdateManyWithWhereWithoutTechniqueTypeInput = {
   data: Prisma.XOR<Prisma.TechniqueUpdateManyMutationInput, Prisma.TechniqueUncheckedUpdateManyWithoutTechniqueTypeInput>
 }
 
+export type TechniqueCreateWithoutOrdersInput = {
+  id?: string
+  name: string
+  description: string
+  property?: Prisma.TechniqueCreatepropertyInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  status?: $Enums.StatusTechnique
+  owner: Prisma.UserCreateNestedOneWithoutTechniquesInput
+  techniqueType: Prisma.TechniqueTypeCreateNestedOneWithoutTechniquesInput
+}
+
+export type TechniqueUncheckedCreateWithoutOrdersInput = {
+  id?: string
+  ownerId: string
+  name: string
+  techniqueTypeId: string
+  description: string
+  property?: Prisma.TechniqueCreatepropertyInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  status?: $Enums.StatusTechnique
+}
+
+export type TechniqueCreateOrConnectWithoutOrdersInput = {
+  where: Prisma.TechniqueWhereUniqueInput
+  create: Prisma.XOR<Prisma.TechniqueCreateWithoutOrdersInput, Prisma.TechniqueUncheckedCreateWithoutOrdersInput>
+}
+
+export type TechniqueUpsertWithoutOrdersInput = {
+  update: Prisma.XOR<Prisma.TechniqueUpdateWithoutOrdersInput, Prisma.TechniqueUncheckedUpdateWithoutOrdersInput>
+  create: Prisma.XOR<Prisma.TechniqueCreateWithoutOrdersInput, Prisma.TechniqueUncheckedCreateWithoutOrdersInput>
+  where?: Prisma.TechniqueWhereInput
+}
+
+export type TechniqueUpdateToOneWithWhereWithoutOrdersInput = {
+  where?: Prisma.TechniqueWhereInput
+  data: Prisma.XOR<Prisma.TechniqueUpdateWithoutOrdersInput, Prisma.TechniqueUncheckedUpdateWithoutOrdersInput>
+}
+
+export type TechniqueUpdateWithoutOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  property?: Prisma.TechniqueUpdatepropertyInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
+  owner?: Prisma.UserUpdateOneRequiredWithoutTechniquesNestedInput
+  techniqueType?: Prisma.TechniqueTypeUpdateOneRequiredWithoutTechniquesNestedInput
+}
+
+export type TechniqueUncheckedUpdateWithoutOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  techniqueTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  property?: Prisma.TechniqueUpdatepropertyInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
+}
+
 export type TechniqueCreateManyOwnerInput = {
   id?: string
   name: string
@@ -637,6 +733,7 @@ export type TechniqueUpdateWithoutOwnerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
   techniqueType?: Prisma.TechniqueTypeUpdateOneRequiredWithoutTechniquesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTechniqueNestedInput
 }
 
 export type TechniqueUncheckedUpdateWithoutOwnerInput = {
@@ -648,6 +745,7 @@ export type TechniqueUncheckedUpdateWithoutOwnerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTechniqueNestedInput
 }
 
 export type TechniqueUncheckedUpdateManyWithoutOwnerInput = {
@@ -681,6 +779,7 @@ export type TechniqueUpdateWithoutTechniqueTypeInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
   owner?: Prisma.UserUpdateOneRequiredWithoutTechniquesNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTechniqueNestedInput
 }
 
 export type TechniqueUncheckedUpdateWithoutTechniqueTypeInput = {
@@ -692,6 +791,7 @@ export type TechniqueUncheckedUpdateWithoutTechniqueTypeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusTechniqueFieldUpdateOperationsInput | $Enums.StatusTechnique
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTechniqueNestedInput
 }
 
 export type TechniqueUncheckedUpdateManyWithoutTechniqueTypeInput = {
@@ -706,6 +806,35 @@ export type TechniqueUncheckedUpdateManyWithoutTechniqueTypeInput = {
 }
 
 
+/**
+ * Count Type TechniqueCountOutputType
+ */
+
+export type TechniqueCountOutputType = {
+  orders: number
+}
+
+export type TechniqueCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  orders?: boolean | TechniqueCountOutputTypeCountOrdersArgs
+}
+
+/**
+ * TechniqueCountOutputType without action
+ */
+export type TechniqueCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TechniqueCountOutputType
+   */
+  select?: Prisma.TechniqueCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * TechniqueCountOutputType without action
+ */
+export type TechniqueCountOutputTypeCountOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderWhereInput
+}
+
 
 export type TechniqueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -719,6 +848,8 @@ export type TechniqueSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   status?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   techniqueType?: boolean | Prisma.TechniqueTypeDefaultArgs<ExtArgs>
+  orders?: boolean | Prisma.Technique$ordersArgs<ExtArgs>
+  _count?: boolean | Prisma.TechniqueCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["technique"]>
 
 export type TechniqueSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -765,6 +896,8 @@ export type TechniqueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type TechniqueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   techniqueType?: boolean | Prisma.TechniqueTypeDefaultArgs<ExtArgs>
+  orders?: boolean | Prisma.Technique$ordersArgs<ExtArgs>
+  _count?: boolean | Prisma.TechniqueCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TechniqueIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -780,6 +913,7 @@ export type $TechniquePayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     owner: Prisma.$UserPayload<ExtArgs>
     techniqueType: Prisma.$TechniqueTypePayload<ExtArgs>
+    orders: Prisma.$OrderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1187,6 +1321,7 @@ export interface Prisma__TechniqueClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   owner<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   techniqueType<T extends Prisma.TechniqueTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TechniqueTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__TechniqueTypeClient<runtime.Types.Result.GetResult<Prisma.$TechniqueTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  orders<T extends Prisma.Technique$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Technique$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1623,6 +1758,30 @@ export type TechniqueDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many Techniques to delete.
    */
   limit?: number
+}
+
+/**
+ * Technique.orders
+ */
+export type Technique$ordersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
+  orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[]
+  cursor?: Prisma.OrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
 }
 
 /**

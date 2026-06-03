@@ -3,8 +3,8 @@ import * as bcrypt from 'bcrypt';
 import { Role } from '../generated/prisma/client';
 
 export class User {
-  id: any;
   constructor(
+    private readonly _id: string,
     private _password: string,
     private readonly _phone: string,
     private readonly _name: string,
@@ -15,6 +15,10 @@ export class User {
       this._password = passwordHash;
     }
   }
+  get id(): string {
+    return this._id;
+  }
+
   @ApiProperty({
     example: '+79991234567',
     description: 'The phone number of the user',

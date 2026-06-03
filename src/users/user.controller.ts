@@ -7,6 +7,7 @@ import {
   Delete,
   Patch,
   Query,
+  ForbiddenException,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -15,6 +16,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { User } from '../auth/user.decorator';
 
 @ApiTags('users')
 @Controller('users')
@@ -49,6 +51,24 @@ export class UserController {
   })
   findAll(@Query() query: PaginationDto) {
     return this.userService.findAll(query);
+  }
+
+  @Get('me')
+  @ApiResponse({
+    status: 200,
+    description: 'The current user has been successfully retrieved.',
+    example: {
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      phone: '+79991234567',
+      name: 'John Doe',
+      role: 'CUSTOMER',
+    },
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  @ApiResponse({ status: 404, description: 'User not found.' })
+  @UseGuards(AuthGuard)
+  getCurrentUser(@User('sub') id: string) {
+    return this.userService.findOne({ id });
   }
 
   @Get('check/phone')
@@ -94,7 +114,16 @@ export class UserController {
   })
   @ApiResponse({ status: 404, description: 'User not found.' })
   @UseGuards(AuthGuard)
-  update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+  update(
+    @User('sub') currentUserId: string,
+    @User('role') role: string,
+    @Param('id') id: string,
+    @Body() dto: UpdateUserDto,
+  ) {
+    if (role !== 'ADMIN' && currentUserId !== id) {
+      throw new ForbiddenException('You can update only your own profile');
+    }
+
     return this.userService.update({ id }, dto);
   }
 
@@ -105,7 +134,15 @@ export class UserController {
   })
   @ApiResponse({ status: 404, description: 'User not found.' })
   @UseGuards(AuthGuard)
-  remove(@Param('id') id: string) {
+  remove(
+    @User('sub') currentUserId: string,
+    @User('role') role: string,
+    @Param('id') id: string,
+  ) {
+    if (role !== 'ADMIN' && currentUserId !== id) {
+      throw new ForbiddenException('You can delete only your own profile');
+    }
+
     return this.userService.remove({ id });
   }
 }

@@ -4,9 +4,13 @@ import { AppModule } from './app.module';
 import { Logger } from 'nestjs-pino';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { join } from 'path';
+import { NestExpressApplication } from '@nestjs/platform-express/interfaces/nest-express-application.interface';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    bufferLogs: true,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('SpecClick API')
@@ -39,6 +43,10 @@ async function bootstrap() {
   app.enableCors({
     origin: corsOrigin,
     credentials: true,
+  });
+
+  app.useStaticAssets(join(__dirname, '..', '..', 'uploads'), {
+    prefix: '/static/',
   });
 
   await app.listen(port);

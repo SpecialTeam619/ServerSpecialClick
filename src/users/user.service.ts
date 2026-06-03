@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.entity';
@@ -11,8 +11,11 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Injectable()
 export class UserService extends UserCrudService {
+  protected readonly prisma: PrismaService;
+
   constructor(prisma: PrismaService, logger: PinoLogger) {
     super(prisma, logger);
+    this.prisma = prisma;
   }
 
   async createUser(createDto: CreateUserDto): Promise<User> {
@@ -24,7 +27,16 @@ export class UserService extends UserCrudService {
   }
 
   async findOne(id: Prisma.UserWhereUniqueInput): Promise<User> {
-    return super.findOne(id);
+    const user = await this.prisma.user.findUnique({
+      where: id,
+      select: { id: true, name: true, phone: true, role: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user as User;
   }
 
   async isUserExist(
@@ -42,10 +54,21 @@ export class UserService extends UserCrudService {
     id: Prisma.UserWhereUniqueInput,
     updateDto: UpdateUserDto,
   ): Promise<User> {
-    return super.update(id, updateDto);
+    const user = await this.prisma.user.update({
+      where: id,
+      data: updateDto,
+      select: { id: true, name: true, phone: true, role: true },
+    });
+
+    return user as User;
   }
 
   async remove(id: Prisma.UserWhereUniqueInput): Promise<User> {
-    return super.remove(id);
+    const user = await this.prisma.user.delete({
+      where: id,
+      select: { id: true, name: true, phone: true, role: true },
+    });
+
+    return user as User;
   }
 }

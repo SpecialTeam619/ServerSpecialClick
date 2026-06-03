@@ -3,25 +3,10 @@ import { IsString, MaxLength } from 'class-validator';
 
 export class CreateOrderDto {
   @ApiProperty({
-    example: '123e4567-e89b-12d3-a456-426614174000',
-    description: 'The ID of the customer.',
+    example: 'f6e9d5a5-5ad5-4f4d-8b2b-9794b062f2d4',
+    description: 'ID арендуемой техники',
   })
   @IsString()
   @MaxLength(255)
-  customerId!: string;
-
-  @ApiProperty({
-    example: '123e4567-e89b-12d3-a456-426614174000',
-    description: 'The ID of the lessor.',
-  })
-  @IsString()
-  @MaxLength(255)
-  lessorId!: string;
-
-  @ApiProperty({
-    example: 'AWAITING',
-    description: 'The status of the order.',
-  })
-  @IsString()
-  status!: string;
+  techniqueId!: string;
 }

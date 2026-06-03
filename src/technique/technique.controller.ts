@@ -13,11 +13,13 @@ import {
 } from '@nestjs/common';
 import { UpdateTechniqueDto } from './dto/update-technique.dto';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { PaginationDto } from '../common/dto/pagination.dto';
+import { FindTechniqueQueryDto } from './dto/find-technique-query.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { Request } from 'express';
 import { TechniqueService } from './technique.service';
 import { CreateTechniqueDto } from './dto/create-technique.dto';
+import { Role } from '../generated/prisma/browser';
+import { Roles } from '../auth/roles.decorator';
 
 type AuthenticatedRequest = Request & {
   user?: {
@@ -44,6 +46,12 @@ export class TechniqueController {
     description: 'Предметов на странице',
   })
   @ApiQuery({
+    name: 'techniqueTypeId',
+    required: false,
+    example: 'f6e9d5a5-5ad5-4f4d-8b2b-9794b062f2d4',
+    description: 'Фильтр по типу техники',
+  })
+  @ApiQuery({
     name: 'sortBy',
     required: false,
     example: 'createdAt',
@@ -56,7 +64,7 @@ export class TechniqueController {
     description: 'Направление сортировки',
     enum: ['asc', 'desc'],
   })
-  findAll(@Query() query: PaginationDto) {
+  findAll(@Query() query: FindTechniqueQueryDto) {
     return this.techniqueService.findAll(query);
   }
 
@@ -76,6 +84,7 @@ export class TechniqueController {
     description: 'The technique has been successfully created.',
   })
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
+  @Roles(Role.LESSOR)
   create(@Req() req: AuthenticatedRequest, @Body() dto: CreateTechniqueDto) {
     const ownerId = req.user?.sub;
 
@@ -92,8 +101,19 @@ export class TechniqueController {
     description: 'The technique has been successfully updated.',
   })
   @ApiResponse({ status: 404, description: 'Technique not found.' })
-  update(@Param('id') id: string, @Body() dto: UpdateTechniqueDto) {
-    return this.techniqueService.update({ id }, dto);
+  @Roles(Role.LESSOR)
+  update(
+    @Req() req: AuthenticatedRequest,
+    @Param('id') id: string,
+    @Body() dto: UpdateTechniqueDto,
+  ) {
+    const ownerId = req.user?.sub;
+
+    if (!ownerId) {
+      throw new UnauthorizedException('Invalid token payload');
+    }
+
+    return this.techniqueService.updateTechnique({ id }, dto, ownerId);
   }
 
   @Delete(':id')
@@ -102,7 +122,14 @@ export class TechniqueController {
     description: 'The technique has been successfully deleted.',
   })
   @ApiResponse({ status: 404, description: 'Technique not found.' })
-  remove(@Param('id') id: string) {
-    return this.techniqueService.remove({ id });
+  @Roles(Role.LESSOR)
+  remove(@Req() req: AuthenticatedRequest, @Param('id') id: string) {
+    const ownerId = req.user?.sub;
+
+    if (!ownerId) {
+      throw new UnauthorizedException('Invalid token payload');
+    }
+
+    return this.techniqueService.removeTechnique({ id }, ownerId);
   }
 }

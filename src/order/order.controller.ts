@@ -49,8 +49,16 @@ export class OrderController {
     description: 'Направление сортировки',
     enum: ['asc', 'desc'],
   })
-  findAll(@Query() query: PaginationDto) {
-    return this.orderService.findAll(query);
+  findAll(
+    @User('sub') userId: string,
+    @User('role') role: string,
+    @Query() query: PaginationDto,
+  ) {
+    if (!userId) {
+      throw new UnauthorizedException('Invalid token payload');
+    }
+
+    return this.orderService.findAll(query, userId, role);
   }
 
   @Get(':id')
@@ -59,8 +67,16 @@ export class OrderController {
     description: 'The order has been successfully retrieved.',
   })
   @ApiResponse({ status: 404, description: 'Order not found.' })
-  findOne(@Param('id') id: string) {
-    return this.orderService.findOne({ id });
+  findOne(
+    @User('sub') userId: string,
+    @User('role') role: string,
+    @Param('id') id: string,
+  ) {
+    if (!userId) {
+      throw new UnauthorizedException('Invalid token payload');
+    }
+
+    return this.orderService.findOne({ id }, userId, role);
   }
 
   @Post()
@@ -83,8 +99,17 @@ export class OrderController {
     description: 'The order has been successfully updated.',
   })
   @ApiResponse({ status: 404, description: 'Order not found.' })
-  update(@Param('id') id: string, @Body() dto: UpdateOrderDto) {
-    return this.orderService.update({ id }, dto);
+  update(
+    @User('sub') userId: string,
+    @User('role') role: string,
+    @Param('id') id: string,
+    @Body() dto: UpdateOrderDto,
+  ) {
+    if (!userId) {
+      throw new UnauthorizedException('Invalid token payload');
+    }
+
+    return this.orderService.update({ id }, dto, userId, role);
   }
 
   @Delete(':id')
