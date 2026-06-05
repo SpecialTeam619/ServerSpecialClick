@@ -27,6 +27,11 @@ enum StatusOrder {
   COMPLETED
 }
 
+enum PaymentMode {
+  SHIFT_7_PLUS_1
+  HOURLY
+}
+
 model User {
   id       String @id @default(uuid())
   phone    String @unique
@@ -81,6 +86,9 @@ model Order {
   techniqueId String?
   technique   Technique? @relation(fields: [techniqueId], references: [id])
   status     StatusOrder @default(AWAITING)
+  objectAddress String?
+  arrivalAt DateTime?
+  paymentMode PaymentMode?
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
 }

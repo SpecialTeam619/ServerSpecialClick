@@ -35,3 +35,11 @@ export const StatusOrder = {
 } as const
 
 export type StatusOrder = (typeof StatusOrder)[keyof typeof StatusOrder]
+
+
+export const PaymentMode = {
+  SHIFT_7_PLUS_1: 'SHIFT_7_PLUS_1',
+  HOURLY: 'HOURLY'
+} as const
+
+export type PaymentMode = (typeof PaymentMode)[keyof typeof PaymentMode]

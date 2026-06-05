@@ -119,6 +119,9 @@ export const OrderScalarFieldEnum = {
   lessorId: 'lessorId',
   techniqueId: 'techniqueId',
   status: 'status',
+  objectAddress: 'objectAddress',
+  arrivalAt: 'arrivalAt',
+  paymentMode: 'paymentMode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -111,6 +111,9 @@ export class OrderService extends OrderCrudService {
         lessorId: technique.ownerId,
         techniqueId: technique.id,
         status: StatusOrder.AWAITING,
+        objectAddress: createDto.objectAddress,
+        arrivalAt: new Date(createDto.arrivalAt),
+        paymentMode: createDto.paymentMode,
       },
       include: ORDER_INCLUDE,
     });
