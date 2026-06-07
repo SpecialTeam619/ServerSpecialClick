@@ -17,6 +17,7 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { PaginatedResponse } from '../common/interface/paginated.interface';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
+import { CreateOrderMessageDto } from './dto/create-order-message.dto';
 
 type OrderStatusValue = StatusOrder | 'REJECTED';
 
@@ -45,6 +46,25 @@ type OrderModelWithTechnique = {
   update(args: unknown): Promise<OrderWithRelations>;
 };
 
+type ChatMessageWithSender = {
+  id: string;
+  orderId: string;
+  senderId: string;
+  text: string;
+  createdAt: Date;
+  sender?: {
+    id: string;
+    name: string;
+    phone: string;
+    role: string;
+  };
+};
+
+type ChatMessageModel = {
+  findMany(args: unknown): Promise<ChatMessageWithSender[]>;
+  create(args: unknown): Promise<ChatMessageWithSender>;
+};
+
 const ORDER_INCLUDE = {
   customer: {
     select: { id: true, name: true, phone: true, role: true },
@@ -70,6 +90,12 @@ const ORDER_STATUS_FLOW: Partial<Record<OrderStatusValue, OrderStatusValue[]>> =
     IN_PROGRESS: [StatusOrder.COMPLETED],
   };
 
+const CHAT_AVAILABLE_STATUSES: OrderStatusValue[] = [
+  StatusOrder.ON_THE_WAY,
+  StatusOrder.IN_PROGRESS,
+  StatusOrder.COMPLETED,
+];
+
 @Injectable()
 export class OrderService extends OrderCrudService {
   protected readonly prisma: PrismaService;
@@ -81,6 +107,10 @@ export class OrderService extends OrderCrudService {
 
   private get orderModel(): OrderModelWithTechnique {
     return this.prisma.order as unknown as OrderModelWithTechnique;
+  }
+
+  private get chatMessageModel(): ChatMessageModel {
+    return this.prisma.chatMessage as unknown as ChatMessageModel;
   }
 
   async createOrder(
@@ -246,6 +276,56 @@ export class OrderService extends OrderCrudService {
     return super.remove(id);
   }
 
+  async findMessages(
+    orderId: string,
+    userId: string,
+    role?: string,
+  ): Promise<ChatMessageWithSender[]> {
+    const order = await this.getOrderForChat(orderId, userId, role);
+
+    this.assertChatAvailable(order);
+
+    return this.chatMessageModel.findMany({
+      where: { orderId },
+      orderBy: { createdAt: 'asc' },
+      include: {
+        sender: {
+          select: { id: true, name: true, phone: true, role: true },
+        },
+      },
+    });
+  }
+
+  async createMessage(
+    orderId: string,
+    dto: CreateOrderMessageDto,
+    userId: string,
+    role?: string,
+  ): Promise<ChatMessageWithSender> {
+    const order = await this.getOrderForChat(orderId, userId, role);
+
+    this.assertChatAvailable(order);
+
+    const text = dto.text.trim();
+
+    if (!text) {
+      throw new BadRequestException('Message text is required');
+    }
+
+    return this.chatMessageModel.create({
+      data: {
+        orderId,
+        senderId: userId,
+        text,
+      },
+      include: {
+        sender: {
+          select: { id: true, name: true, phone: true, role: true },
+        },
+      },
+    });
+  }
+
   private assertCanReadOrder(
     order: OrderWithRelations,
     userId: string,
@@ -285,5 +365,34 @@ export class OrderService extends OrderCrudService {
         `Cannot change order status from ${currentStatus} to ${nextStatus}`,
       );
     }
+  }
+
+  private async getOrderForChat(
+    orderId: string,
+    userId: string,
+    role?: string,
+  ): Promise<OrderWithRelations> {
+    const order = await this.orderModel.findUnique({
+      where: { id: orderId },
+      include: ORDER_INCLUDE,
+    });
+
+    if (!order) {
+      throw new NotFoundException('Order not found');
+    }
+
+    this.assertCanReadOrder(order, userId, role);
+
+    return order;
+  }
+
+  private assertChatAvailable(order: OrderWithRelations) {
+    if (CHAT_AVAILABLE_STATUSES.includes(order.status)) {
+      return;
+    }
+
+    throw new BadRequestException(
+      'Chat is available only after the lessor accepts the order',
+    );
   }
 }

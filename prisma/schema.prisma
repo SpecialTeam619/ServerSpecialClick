@@ -47,6 +47,8 @@ model User {
 
   // Заказы, где пользователь выступает в роли арендодателя
   lessorOrders Order[] @relation("LessorOrders")
+
+  chatMessages ChatMessage[]
 }
 
 model TechniqueType {
@@ -91,4 +93,15 @@ model Order {
   paymentMode PaymentMode?
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
+  messages   ChatMessage[]
+}
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id])
+  text      String
+  createdAt DateTime @default(now())
 }

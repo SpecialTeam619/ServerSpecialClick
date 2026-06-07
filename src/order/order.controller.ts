@@ -17,6 +17,7 @@ import { OrderService } from './order.service';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { User } from '../auth/user.decorator';
+import { CreateOrderMessageDto } from './dto/create-order-message.dto';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -59,6 +60,41 @@ export class OrderController {
     }
 
     return this.orderService.findAll(query, userId, role);
+  }
+
+  @Get(':id/messages')
+  @ApiResponse({
+    status: 200,
+    description: 'Order chat messages have been successfully retrieved.',
+  })
+  getMessages(
+    @User('sub') userId: string,
+    @User('role') role: string,
+    @Param('id') id: string,
+  ) {
+    if (!userId) {
+      throw new UnauthorizedException('Invalid token payload');
+    }
+
+    return this.orderService.findMessages(id, userId, role);
+  }
+
+  @Post(':id/messages')
+  @ApiResponse({
+    status: 201,
+    description: 'Order chat message has been successfully created.',
+  })
+  createMessage(
+    @User('sub') userId: string,
+    @User('role') role: string,
+    @Param('id') id: string,
+    @Body() dto: CreateOrderMessageDto,
+  ) {
+    if (!userId) {
+      throw new UnauthorizedException('Invalid token payload');
+    }
+
+    return this.orderService.createMessage(id, dto, userId, role);
   }
 
   @Get(':id')

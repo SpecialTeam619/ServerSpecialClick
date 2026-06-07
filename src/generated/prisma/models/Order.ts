@@ -225,6 +225,7 @@ export type OrderWhereInput = {
   customer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   lessor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   technique?: Prisma.XOR<Prisma.TechniqueNullableScalarRelationFilter, Prisma.TechniqueWhereInput> | null
+  messages?: Prisma.ChatMessageListRelationFilter
 }
 
 export type OrderOrderByWithRelationInput = {
@@ -241,6 +242,7 @@ export type OrderOrderByWithRelationInput = {
   customer?: Prisma.UserOrderByWithRelationInput
   lessor?: Prisma.UserOrderByWithRelationInput
   technique?: Prisma.TechniqueOrderByWithRelationInput
+  messages?: Prisma.ChatMessageOrderByRelationAggregateInput
 }
 
 export type OrderWhereUniqueInput = Prisma.AtLeast<{
@@ -260,6 +262,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   customer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   lessor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   technique?: Prisma.XOR<Prisma.TechniqueNullableScalarRelationFilter, Prisma.TechniqueWhereInput> | null
+  messages?: Prisma.ChatMessageListRelationFilter
 }, "id">
 
 export type OrderOrderByWithAggregationInput = {
@@ -305,6 +308,7 @@ export type OrderCreateInput = {
   customer: Prisma.UserCreateNestedOneWithoutCustomerOrdersInput
   lessor: Prisma.UserCreateNestedOneWithoutLessorOrdersInput
   technique?: Prisma.TechniqueCreateNestedOneWithoutOrdersInput
+  messages?: Prisma.ChatMessageCreateNestedManyWithoutOrderInput
 }
 
 export type OrderUncheckedCreateInput = {
@@ -318,6 +322,7 @@ export type OrderUncheckedCreateInput = {
   paymentMode?: $Enums.PaymentMode | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  messages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutOrderInput
 }
 
 export type OrderUpdateInput = {
@@ -331,6 +336,7 @@ export type OrderUpdateInput = {
   customer?: Prisma.UserUpdateOneRequiredWithoutCustomerOrdersNestedInput
   lessor?: Prisma.UserUpdateOneRequiredWithoutLessorOrdersNestedInput
   technique?: Prisma.TechniqueUpdateOneWithoutOrdersNestedInput
+  messages?: Prisma.ChatMessageUpdateManyWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateInput = {
@@ -344,6 +350,7 @@ export type OrderUncheckedUpdateInput = {
   paymentMode?: Prisma.NullableEnumPaymentModeFieldUpdateOperationsInput | $Enums.PaymentMode | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  messages?: Prisma.ChatMessageUncheckedUpdateManyWithoutOrderNestedInput
 }
 
 export type OrderCreateManyInput = {
@@ -429,6 +436,11 @@ export type OrderMinOrderByAggregateInput = {
   paymentMode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type OrderScalarRelationFilter = {
+  is?: Prisma.OrderWhereInput
+  isNot?: Prisma.OrderWhereInput
 }
 
 export type OrderCreateNestedManyWithoutCustomerInput = {
@@ -569,6 +581,20 @@ export type NullableEnumPaymentModeFieldUpdateOperationsInput = {
   set?: $Enums.PaymentMode | null
 }
 
+export type OrderCreateNestedOneWithoutMessagesInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutMessagesInput, Prisma.OrderUncheckedCreateWithoutMessagesInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutMessagesInput
+  connect?: Prisma.OrderWhereUniqueInput
+}
+
+export type OrderUpdateOneRequiredWithoutMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutMessagesInput, Prisma.OrderUncheckedCreateWithoutMessagesInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutMessagesInput
+  upsert?: Prisma.OrderUpsertWithoutMessagesInput
+  connect?: Prisma.OrderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderUpdateToOneWithWhereWithoutMessagesInput, Prisma.OrderUpdateWithoutMessagesInput>, Prisma.OrderUncheckedUpdateWithoutMessagesInput>
+}
+
 export type OrderCreateWithoutCustomerInput = {
   id?: string
   status?: $Enums.StatusOrder
@@ -579,6 +605,7 @@ export type OrderCreateWithoutCustomerInput = {
   updatedAt?: Date | string
   lessor: Prisma.UserCreateNestedOneWithoutLessorOrdersInput
   technique?: Prisma.TechniqueCreateNestedOneWithoutOrdersInput
+  messages?: Prisma.ChatMessageCreateNestedManyWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutCustomerInput = {
@@ -591,6 +618,7 @@ export type OrderUncheckedCreateWithoutCustomerInput = {
   paymentMode?: $Enums.PaymentMode | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  messages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutOrderInput
 }
 
 export type OrderCreateOrConnectWithoutCustomerInput = {
@@ -613,6 +641,7 @@ export type OrderCreateWithoutLessorInput = {
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutCustomerOrdersInput
   technique?: Prisma.TechniqueCreateNestedOneWithoutOrdersInput
+  messages?: Prisma.ChatMessageCreateNestedManyWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutLessorInput = {
@@ -625,6 +654,7 @@ export type OrderUncheckedCreateWithoutLessorInput = {
   paymentMode?: $Enums.PaymentMode | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  messages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutOrderInput
 }
 
 export type OrderCreateOrConnectWithoutLessorInput = {
@@ -695,6 +725,7 @@ export type OrderCreateWithoutTechniqueInput = {
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutCustomerOrdersInput
   lessor: Prisma.UserCreateNestedOneWithoutLessorOrdersInput
+  messages?: Prisma.ChatMessageCreateNestedManyWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutTechniqueInput = {
@@ -707,6 +738,7 @@ export type OrderUncheckedCreateWithoutTechniqueInput = {
   paymentMode?: $Enums.PaymentMode | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  messages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutOrderInput
 }
 
 export type OrderCreateOrConnectWithoutTechniqueInput = {
@@ -733,6 +765,74 @@ export type OrderUpdateWithWhereUniqueWithoutTechniqueInput = {
 export type OrderUpdateManyWithWhereWithoutTechniqueInput = {
   where: Prisma.OrderScalarWhereInput
   data: Prisma.XOR<Prisma.OrderUpdateManyMutationInput, Prisma.OrderUncheckedUpdateManyWithoutTechniqueInput>
+}
+
+export type OrderCreateWithoutMessagesInput = {
+  id?: string
+  status?: $Enums.StatusOrder
+  objectAddress?: string | null
+  arrivalAt?: Date | string | null
+  paymentMode?: $Enums.PaymentMode | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customer: Prisma.UserCreateNestedOneWithoutCustomerOrdersInput
+  lessor: Prisma.UserCreateNestedOneWithoutLessorOrdersInput
+  technique?: Prisma.TechniqueCreateNestedOneWithoutOrdersInput
+}
+
+export type OrderUncheckedCreateWithoutMessagesInput = {
+  id?: string
+  customerId: string
+  lessorId: string
+  techniqueId?: string | null
+  status?: $Enums.StatusOrder
+  objectAddress?: string | null
+  arrivalAt?: Date | string | null
+  paymentMode?: $Enums.PaymentMode | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type OrderCreateOrConnectWithoutMessagesInput = {
+  where: Prisma.OrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderCreateWithoutMessagesInput, Prisma.OrderUncheckedCreateWithoutMessagesInput>
+}
+
+export type OrderUpsertWithoutMessagesInput = {
+  update: Prisma.XOR<Prisma.OrderUpdateWithoutMessagesInput, Prisma.OrderUncheckedUpdateWithoutMessagesInput>
+  create: Prisma.XOR<Prisma.OrderCreateWithoutMessagesInput, Prisma.OrderUncheckedCreateWithoutMessagesInput>
+  where?: Prisma.OrderWhereInput
+}
+
+export type OrderUpdateToOneWithWhereWithoutMessagesInput = {
+  where?: Prisma.OrderWhereInput
+  data: Prisma.XOR<Prisma.OrderUpdateWithoutMessagesInput, Prisma.OrderUncheckedUpdateWithoutMessagesInput>
+}
+
+export type OrderUpdateWithoutMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
+  objectAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  arrivalAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentMode?: Prisma.NullableEnumPaymentModeFieldUpdateOperationsInput | $Enums.PaymentMode | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.UserUpdateOneRequiredWithoutCustomerOrdersNestedInput
+  lessor?: Prisma.UserUpdateOneRequiredWithoutLessorOrdersNestedInput
+  technique?: Prisma.TechniqueUpdateOneWithoutOrdersNestedInput
+}
+
+export type OrderUncheckedUpdateWithoutMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  lessorId?: Prisma.StringFieldUpdateOperationsInput | string
+  techniqueId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumStatusOrderFieldUpdateOperationsInput | $Enums.StatusOrder
+  objectAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  arrivalAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentMode?: Prisma.NullableEnumPaymentModeFieldUpdateOperationsInput | $Enums.PaymentMode | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type OrderCreateManyCustomerInput = {
@@ -769,6 +869,7 @@ export type OrderUpdateWithoutCustomerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessor?: Prisma.UserUpdateOneRequiredWithoutLessorOrdersNestedInput
   technique?: Prisma.TechniqueUpdateOneWithoutOrdersNestedInput
+  messages?: Prisma.ChatMessageUpdateManyWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutCustomerInput = {
@@ -781,6 +882,7 @@ export type OrderUncheckedUpdateWithoutCustomerInput = {
   paymentMode?: Prisma.NullableEnumPaymentModeFieldUpdateOperationsInput | $Enums.PaymentMode | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  messages?: Prisma.ChatMessageUncheckedUpdateManyWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateManyWithoutCustomerInput = {
@@ -805,6 +907,7 @@ export type OrderUpdateWithoutLessorInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutCustomerOrdersNestedInput
   technique?: Prisma.TechniqueUpdateOneWithoutOrdersNestedInput
+  messages?: Prisma.ChatMessageUpdateManyWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutLessorInput = {
@@ -817,6 +920,7 @@ export type OrderUncheckedUpdateWithoutLessorInput = {
   paymentMode?: Prisma.NullableEnumPaymentModeFieldUpdateOperationsInput | $Enums.PaymentMode | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  messages?: Prisma.ChatMessageUncheckedUpdateManyWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateManyWithoutLessorInput = {
@@ -853,6 +957,7 @@ export type OrderUpdateWithoutTechniqueInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutCustomerOrdersNestedInput
   lessor?: Prisma.UserUpdateOneRequiredWithoutLessorOrdersNestedInput
+  messages?: Prisma.ChatMessageUpdateManyWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutTechniqueInput = {
@@ -865,6 +970,7 @@ export type OrderUncheckedUpdateWithoutTechniqueInput = {
   paymentMode?: Prisma.NullableEnumPaymentModeFieldUpdateOperationsInput | $Enums.PaymentMode | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  messages?: Prisma.ChatMessageUncheckedUpdateManyWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateManyWithoutTechniqueInput = {
@@ -879,6 +985,35 @@ export type OrderUncheckedUpdateManyWithoutTechniqueInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type OrderCountOutputType
+ */
+
+export type OrderCountOutputType = {
+  messages: number
+}
+
+export type OrderCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  messages?: boolean | OrderCountOutputTypeCountMessagesArgs
+}
+
+/**
+ * OrderCountOutputType without action
+ */
+export type OrderCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrderCountOutputType
+   */
+  select?: Prisma.OrderCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * OrderCountOutputType without action
+ */
+export type OrderCountOutputTypeCountMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChatMessageWhereInput
+}
 
 
 export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -895,6 +1030,8 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   lessor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   technique?: boolean | Prisma.Order$techniqueArgs<ExtArgs>
+  messages?: boolean | Prisma.Order$messagesArgs<ExtArgs>
+  _count?: boolean | Prisma.OrderCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
 export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -947,6 +1084,8 @@ export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   lessor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   technique?: boolean | Prisma.Order$techniqueArgs<ExtArgs>
+  messages?: boolean | Prisma.Order$messagesArgs<ExtArgs>
+  _count?: boolean | Prisma.OrderCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrderIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -965,6 +1104,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     customer: Prisma.$UserPayload<ExtArgs>
     lessor: Prisma.$UserPayload<ExtArgs>
     technique: Prisma.$TechniquePayload<ExtArgs> | null
+    messages: Prisma.$ChatMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1374,6 +1514,7 @@ export interface Prisma__OrderClient<T, Null = never, ExtArgs extends runtime.Ty
   customer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   lessor<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   technique<T extends Prisma.Order$techniqueArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$techniqueArgs<ExtArgs>>): Prisma.Prisma__TechniqueClient<runtime.Types.Result.GetResult<Prisma.$TechniquePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  messages<T extends Prisma.Order$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1830,6 +1971,30 @@ export type Order$techniqueArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   include?: Prisma.TechniqueInclude<ExtArgs> | null
   where?: Prisma.TechniqueWhereInput
+}
+
+/**
+ * Order.messages
+ */
+export type Order$messagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChatMessage
+   */
+  select?: Prisma.ChatMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChatMessage
+   */
+  omit?: Prisma.ChatMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChatMessageInclude<ExtArgs> | null
+  where?: Prisma.ChatMessageWhereInput
+  orderBy?: Prisma.ChatMessageOrderByWithRelationInput | Prisma.ChatMessageOrderByWithRelationInput[]
+  cursor?: Prisma.ChatMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChatMessageScalarFieldEnum | Prisma.ChatMessageScalarFieldEnum[]
 }
 
 /**

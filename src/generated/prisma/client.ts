@@ -59,3 +59,8 @@ export type Technique = Prisma.TechniqueModel
  * 
  */
 export type Order = Prisma.OrderModel
+/**
+ * Model ChatMessage
+ * 
+ */
+export type ChatMessage = Prisma.ChatMessageModel
