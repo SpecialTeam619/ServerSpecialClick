@@ -72,6 +72,7 @@ model Technique {
   techniqueTypeId String
   techniqueType   TechniqueType   @relation(fields: [techniqueTypeId], references: [id])
   description     String
+  photoUrl        String?
   property        String[]
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt

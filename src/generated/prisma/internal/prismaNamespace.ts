@@ -848,6 +848,7 @@ export const TechniqueScalarFieldEnum = {
   name: 'name',
   techniqueTypeId: 'techniqueTypeId',
   description: 'description',
+  photoUrl: 'photoUrl',
   property: 'property',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',

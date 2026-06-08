@@ -15,7 +15,7 @@ export class AuthService {
     email: Prisma.UserWhereUniqueInput,
     pass: string,
   ): Promise<{ access_token: string }> {
-    const user = await this.userService.findOne(email);
+    const user = await this.userService.findOneWithPassword(email);
 
     if (!user || user.password !== pass) {
       throw new UnauthorizedException();

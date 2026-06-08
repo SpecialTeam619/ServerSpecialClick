@@ -39,6 +39,13 @@ export class Technique {
   description!: string;
 
   @ApiProperty({
+    example: 'http://localhost:3000/static/technique-photo.jpg',
+    description: 'URL изображения техники',
+    required: false,
+  })
+  photoUrl!: string | null;
+
+  @ApiProperty({
     example: ['property1', 'property2'],
     description: 'Свойства техники',
   })

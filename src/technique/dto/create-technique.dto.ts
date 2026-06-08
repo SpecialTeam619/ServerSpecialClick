@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ArrayMinSize, IsArray, IsString, MaxLength } from 'class-validator';
+import { Transform } from 'class-transformer';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateTechniqueDto {
   @ApiProperty({
@@ -34,6 +41,17 @@ export class CreateTechniqueDto {
     example: ['property1', 'property2'],
     description: 'Свойства техники',
   })
+  @Transform(({ value }) => {
+    if (Array.isArray(value)) {
+      return value;
+    }
+
+    if (typeof value === 'string') {
+      return [value];
+    }
+
+    return value;
+  })
   @IsArray({ message: 'Свойства должны быть массивом строк' })
   @ArrayMinSize(1, { message: 'Нужно указать хотя бы одно свойство' })
   @IsString({ each: true, message: 'Каждое свойство должно быть строкой' })
@@ -42,4 +60,13 @@ export class CreateTechniqueDto {
     message: 'Каждое свойство не должно превышать 255 символов',
   })
   property!: string[];
+
+  @ApiProperty({
+    example: 'http://localhost:3000/static/technique-photo.jpg',
+    description: 'URL изображения техники',
+    required: false,
+  })
+  @IsOptional()
+  @IsString({ message: 'URL изображения должен быть строкой' })
+  photoUrl?: string;
 }

@@ -30,6 +30,7 @@ export type TechniqueMinAggregateOutputType = {
   name: string | null
   techniqueTypeId: string | null
   description: string | null
+  photoUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
   status: $Enums.StatusTechnique | null
@@ -41,6 +42,7 @@ export type TechniqueMaxAggregateOutputType = {
   name: string | null
   techniqueTypeId: string | null
   description: string | null
+  photoUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
   status: $Enums.StatusTechnique | null
@@ -52,6 +54,7 @@ export type TechniqueCountAggregateOutputType = {
   name: number
   techniqueTypeId: number
   description: number
+  photoUrl: number
   property: number
   createdAt: number
   updatedAt: number
@@ -66,6 +69,7 @@ export type TechniqueMinAggregateInputType = {
   name?: true
   techniqueTypeId?: true
   description?: true
+  photoUrl?: true
   createdAt?: true
   updatedAt?: true
   status?: true
@@ -77,6 +81,7 @@ export type TechniqueMaxAggregateInputType = {
   name?: true
   techniqueTypeId?: true
   description?: true
+  photoUrl?: true
   createdAt?: true
   updatedAt?: true
   status?: true
@@ -88,6 +93,7 @@ export type TechniqueCountAggregateInputType = {
   name?: true
   techniqueTypeId?: true
   description?: true
+  photoUrl?: true
   property?: true
   createdAt?: true
   updatedAt?: true
@@ -173,6 +179,7 @@ export type TechniqueGroupByOutputType = {
   name: string
   techniqueTypeId: string
   description: string
+  photoUrl: string | null
   property: string[]
   createdAt: Date
   updatedAt: Date
@@ -206,6 +213,7 @@ export type TechniqueWhereInput = {
   name?: Prisma.StringFilter<"Technique"> | string
   techniqueTypeId?: Prisma.StringFilter<"Technique"> | string
   description?: Prisma.StringFilter<"Technique"> | string
+  photoUrl?: Prisma.StringNullableFilter<"Technique"> | string | null
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
@@ -221,6 +229,7 @@ export type TechniqueOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   techniqueTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   property?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -239,6 +248,7 @@ export type TechniqueWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Technique"> | string
   techniqueTypeId?: Prisma.StringFilter<"Technique"> | string
   description?: Prisma.StringFilter<"Technique"> | string
+  photoUrl?: Prisma.StringNullableFilter<"Technique"> | string | null
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
@@ -254,6 +264,7 @@ export type TechniqueOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   techniqueTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   property?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -272,6 +283,7 @@ export type TechniqueScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Technique"> | string
   techniqueTypeId?: Prisma.StringWithAggregatesFilter<"Technique"> | string
   description?: Prisma.StringWithAggregatesFilter<"Technique"> | string
+  photoUrl?: Prisma.StringNullableWithAggregatesFilter<"Technique"> | string | null
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Technique"> | Date | string
@@ -282,6 +294,7 @@ export type TechniqueCreateInput = {
   id?: string
   name: string
   description: string
+  photoUrl?: string | null
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -297,6 +310,7 @@ export type TechniqueUncheckedCreateInput = {
   name: string
   techniqueTypeId: string
   description: string
+  photoUrl?: string | null
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -308,6 +322,7 @@ export type TechniqueUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -323,6 +338,7 @@ export type TechniqueUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   techniqueTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -336,6 +352,7 @@ export type TechniqueCreateManyInput = {
   name: string
   techniqueTypeId: string
   description: string
+  photoUrl?: string | null
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -346,6 +363,7 @@ export type TechniqueUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -358,6 +376,7 @@ export type TechniqueUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   techniqueTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -388,6 +407,7 @@ export type TechniqueCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   techniqueTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  photoUrl?: Prisma.SortOrder
   property?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -400,6 +420,7 @@ export type TechniqueMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   techniqueTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  photoUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -411,6 +432,7 @@ export type TechniqueMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   techniqueTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  photoUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -538,6 +560,7 @@ export type TechniqueCreateWithoutOwnerInput = {
   id?: string
   name: string
   description: string
+  photoUrl?: string | null
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -551,6 +574,7 @@ export type TechniqueUncheckedCreateWithoutOwnerInput = {
   name: string
   techniqueTypeId: string
   description: string
+  photoUrl?: string | null
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -593,6 +617,7 @@ export type TechniqueScalarWhereInput = {
   name?: Prisma.StringFilter<"Technique"> | string
   techniqueTypeId?: Prisma.StringFilter<"Technique"> | string
   description?: Prisma.StringFilter<"Technique"> | string
+  photoUrl?: Prisma.StringNullableFilter<"Technique"> | string | null
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
@@ -603,6 +628,7 @@ export type TechniqueCreateWithoutTechniqueTypeInput = {
   id?: string
   name: string
   description: string
+  photoUrl?: string | null
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -616,6 +642,7 @@ export type TechniqueUncheckedCreateWithoutTechniqueTypeInput = {
   ownerId: string
   name: string
   description: string
+  photoUrl?: string | null
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -653,6 +680,7 @@ export type TechniqueCreateWithoutOrdersInput = {
   id?: string
   name: string
   description: string
+  photoUrl?: string | null
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -667,6 +695,7 @@ export type TechniqueUncheckedCreateWithoutOrdersInput = {
   name: string
   techniqueTypeId: string
   description: string
+  photoUrl?: string | null
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -693,6 +722,7 @@ export type TechniqueUpdateWithoutOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -707,6 +737,7 @@ export type TechniqueUncheckedUpdateWithoutOrdersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   techniqueTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -718,6 +749,7 @@ export type TechniqueCreateManyOwnerInput = {
   name: string
   techniqueTypeId: string
   description: string
+  photoUrl?: string | null
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -728,6 +760,7 @@ export type TechniqueUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -741,6 +774,7 @@ export type TechniqueUncheckedUpdateWithoutOwnerInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   techniqueTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -753,6 +787,7 @@ export type TechniqueUncheckedUpdateManyWithoutOwnerInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   techniqueTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -764,6 +799,7 @@ export type TechniqueCreateManyTechniqueTypeInput = {
   ownerId: string
   name: string
   description: string
+  photoUrl?: string | null
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -774,6 +810,7 @@ export type TechniqueUpdateWithoutTechniqueTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -787,6 +824,7 @@ export type TechniqueUncheckedUpdateWithoutTechniqueTypeInput = {
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -799,6 +837,7 @@ export type TechniqueUncheckedUpdateManyWithoutTechniqueTypeInput = {
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -842,6 +881,7 @@ export type TechniqueSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   name?: boolean
   techniqueTypeId?: boolean
   description?: boolean
+  photoUrl?: boolean
   property?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -858,6 +898,7 @@ export type TechniqueSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   name?: boolean
   techniqueTypeId?: boolean
   description?: boolean
+  photoUrl?: boolean
   property?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -872,6 +913,7 @@ export type TechniqueSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   name?: boolean
   techniqueTypeId?: boolean
   description?: boolean
+  photoUrl?: boolean
   property?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -886,13 +928,14 @@ export type TechniqueSelectScalar = {
   name?: boolean
   techniqueTypeId?: boolean
   description?: boolean
+  photoUrl?: boolean
   property?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   status?: boolean
 }
 
-export type TechniqueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerId" | "name" | "techniqueTypeId" | "description" | "property" | "createdAt" | "updatedAt" | "status", ExtArgs["result"]["technique"]>
+export type TechniqueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerId" | "name" | "techniqueTypeId" | "description" | "photoUrl" | "property" | "createdAt" | "updatedAt" | "status", ExtArgs["result"]["technique"]>
 export type TechniqueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   techniqueType?: boolean | Prisma.TechniqueTypeDefaultArgs<ExtArgs>
@@ -921,6 +964,7 @@ export type $TechniquePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     name: string
     techniqueTypeId: string
     description: string
+    photoUrl: string | null
     property: string[]
     createdAt: Date
     updatedAt: Date
@@ -1356,6 +1400,7 @@ export interface TechniqueFieldRefs {
   readonly name: Prisma.FieldRef<"Technique", 'String'>
   readonly techniqueTypeId: Prisma.FieldRef<"Technique", 'String'>
   readonly description: Prisma.FieldRef<"Technique", 'String'>
+  readonly photoUrl: Prisma.FieldRef<"Technique", 'String'>
   readonly property: Prisma.FieldRef<"Technique", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Technique", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Technique", 'DateTime'>

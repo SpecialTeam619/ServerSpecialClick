@@ -39,6 +39,20 @@ export class UserService extends UserCrudService {
     return user as User;
   }
 
+  async findOneWithPassword(
+    id: Prisma.UserWhereUniqueInput,
+  ): Promise<User & { password: string }> {
+    const user = await this.prisma.user.findUnique({
+      where: id,
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user as User & { password: string };
+  }
+
   async isUserExist(
     phone: Prisma.UserWhereUniqueInput,
   ): Promise<{ exists: boolean }> {

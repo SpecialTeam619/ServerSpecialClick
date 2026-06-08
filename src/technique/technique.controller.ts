@@ -10,7 +10,11 @@ import {
   Req,
   UnauthorizedException,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateTechniqueDto } from './dto/update-technique.dto';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FindTechniqueQueryDto } from './dto/find-technique-query.dto';
@@ -20,6 +24,31 @@ import { TechniqueService } from './technique.service';
 import { CreateTechniqueDto } from './dto/create-technique.dto';
 import { Role } from '../generated/prisma/browser';
 import { Roles } from '../auth/roles.decorator';
+import { extname, join } from 'path';
+import { mkdirSync, renameSync } from 'fs';
+
+const uploadsPath = join(__dirname, '..', '..', '..', 'uploads');
+mkdirSync(uploadsPath, { recursive: true });
+
+type UploadedImageFile = {
+  mimetype: string;
+  originalname: string;
+  filename: string;
+  path: string;
+};
+
+const imageFileFilter = (
+  _req: Request,
+  file: UploadedImageFile,
+  callback: (error: Error | null, acceptFile: boolean) => void,
+) => {
+  if (!file.mimetype.startsWith('image/')) {
+    callback(new BadRequestException('Only image files are allowed'), false);
+    return;
+  }
+
+  callback(null, true);
+};
 
 type AuthenticatedRequest = Request & {
   user?: {
@@ -85,11 +114,35 @@ export class TechniqueController {
   })
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
   @Roles(Role.LESSOR)
-  create(@Req() req: AuthenticatedRequest, @Body() dto: CreateTechniqueDto) {
+  @UseInterceptors(
+    FileInterceptor('image', {
+      dest: uploadsPath,
+      fileFilter: imageFileFilter,
+      limits: { fileSize: 5 * 1024 * 1024 },
+    }),
+  )
+  create(
+    @Req() req: AuthenticatedRequest,
+    @Body() dto: CreateTechniqueDto,
+    @UploadedFile() image?: UploadedImageFile,
+  ) {
     const ownerId = req.user?.sub;
 
     if (!ownerId) {
       throw new UnauthorizedException('Invalid token payload');
+    }
+
+    if (image) {
+      const extension = extname(image.originalname);
+      const fileName = extension
+        ? `technique-${image.filename}${extension}`
+        : image.filename;
+
+      if (fileName !== image.filename) {
+        renameSync(image.path, join(uploadsPath, fileName));
+      }
+
+      dto.photoUrl = `${req.protocol}://${req.get('host')}/static/${fileName}`;
     }
 
     return this.techniqueService.createTechnique(dto, ownerId);
