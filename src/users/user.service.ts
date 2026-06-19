@@ -78,11 +78,46 @@ export class UserService extends UserCrudService {
   }
 
   async remove(id: Prisma.UserWhereUniqueInput): Promise<User> {
-    const user = await this.prisma.user.delete({
+    const existingUser = await this.prisma.user.findUnique({
       where: id,
       select: { id: true, name: true, phone: true, role: true },
     });
 
-    return user as User;
+    if (!existingUser) {
+      throw new NotFoundException('User not found');
+    }
+
+    return this.prisma.$transaction(async (tx) => {
+      const relatedOrders = await tx.order.findMany({
+        where: {
+          OR: [{ customerId: existingUser.id }, { lessorId: existingUser.id }],
+        },
+        select: { id: true },
+      });
+      const relatedOrderIds = relatedOrders.map((order) => order.id);
+
+      const chatMessageWhere: Prisma.ChatMessageWhereInput = {
+        OR: [{ senderId: existingUser.id }],
+      };
+
+      if (relatedOrderIds.length > 0) {
+        chatMessageWhere.OR?.push({ orderId: { in: relatedOrderIds } });
+      }
+
+      await tx.chatMessage.deleteMany({ where: chatMessageWhere });
+      await tx.order.deleteMany({
+        where: {
+          OR: [{ customerId: existingUser.id }, { lessorId: existingUser.id }],
+        },
+      });
+      await tx.technique.deleteMany({ where: { ownerId: existingUser.id } });
+
+      const user = await tx.user.delete({
+        where: { id: existingUser.id },
+        select: { id: true, name: true, phone: true, role: true },
+      });
+
+      return user as User;
+    });
   }
 }
