@@ -8,6 +8,8 @@
   "scripts": {
     "db:shell": "docker exec -it backend-dev sh",
     "migrate:dev": "docker exec -it backend-dev sh -c \"cd /app && npx prisma migrate dev\"",
+    "migrate:deploy": "prisma migrate deploy",
+    "db:seed": "prisma db seed",
     "postinstall": "prisma generate",
     "build": "cross-env NODE_ENV=production nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
