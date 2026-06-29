@@ -122,6 +122,10 @@ export class TechniqueService extends TechniqueCrudService {
       data.property = { set: updateDto.property };
     }
 
+    if (typeof updateDto.photoUrl !== 'undefined') {
+      data.photoUrl = updateDto.photoUrl;
+    }
+
     const result = await this.prisma.technique.update({
       where: id,
       data,

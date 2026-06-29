@@ -59,8 +59,12 @@ export class UserService extends UserCrudService {
     try {
       await super.findOne(phone);
       return { exists: true };
-    } catch {
-      return { exists: false };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return { exists: false };
+      }
+
+      throw error;
     }
   }
 

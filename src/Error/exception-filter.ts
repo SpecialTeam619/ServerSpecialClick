@@ -42,8 +42,13 @@ export class CustomExceptionFilter implements ExceptionFilter {
       );
     } else if (err instanceof Prisma.PrismaClientKnownRequestError) {
       ({ status, message } = this.mapPrismaError(err));
+    } else if (err instanceof Prisma.PrismaClientInitializationError) {
+      status = HttpStatus.SERVICE_UNAVAILABLE;
+      message = isProd
+        ? 'Database is unavailable'
+        : 'Database is unavailable. Check that PostgreSQL is running and DATABASE_URL is correct.';
     } else if (err instanceof Error) {
-      message = isProd ? 'Internal server error' : err.message;
+      message = isProd ? 'Internal server error' : this.formatErrorMessage(err);
     } else {
       message = unexpectedMessage;
     }
@@ -106,10 +111,45 @@ export class CustomExceptionFilter implements ExceptionFilter {
     return fallbackMessage;
   }
 
+  private formatErrorMessage(err: Error): string {
+    const normalizedMessage = err.message.replace(/\r/g, '').trim();
+
+    if (normalizedMessage.includes('does not exist in the current database')) {
+      return 'Database schema is not initialized. Run: npx prisma migrate deploy';
+    }
+
+    if (normalizedMessage.includes("Can't reach database server")) {
+      return 'Database is unavailable. Check that PostgreSQL is running and DATABASE_URL is correct.';
+    }
+
+    const cause = (err as Error & { cause?: unknown }).cause;
+    if (cause instanceof Error && cause.message) {
+      return `${normalizedMessage}\n${cause.message}`.trim();
+    }
+
+    return normalizedMessage;
+  }
+
   private mapPrismaError(err: Prisma.PrismaClientKnownRequestError): {
     status: number;
     message: string;
   } {
+    if (err.code === 'P1001') {
+      return {
+        status: HttpStatus.SERVICE_UNAVAILABLE,
+        message:
+          'Database is unavailable. Check that PostgreSQL is running and DATABASE_URL is correct.',
+      };
+    }
+
+    if (err.code === 'P2021') {
+      return {
+        status: HttpStatus.SERVICE_UNAVAILABLE,
+        message:
+          'Database schema is not initialized. Run: npx prisma migrate deploy',
+      };
+    }
+
     if (err.code === 'P2002') {
       const target = (err.meta as { target?: string[] | string } | undefined)
         ?.target;
@@ -136,7 +176,7 @@ export class CustomExceptionFilter implements ExceptionFilter {
 
     return {
       status: HttpStatus.BAD_REQUEST,
-      message: err.message,
+      message: this.formatErrorMessage(err),
     };
   }
 }

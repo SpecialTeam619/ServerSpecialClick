@@ -155,15 +155,36 @@ export class TechniqueController {
   })
   @ApiResponse({ status: 404, description: 'Technique not found.' })
   @Roles(Role.LESSOR)
+  @UseInterceptors(
+    FileInterceptor('image', {
+      dest: uploadsPath,
+      fileFilter: imageFileFilter,
+      limits: { fileSize: 5 * 1024 * 1024 },
+    }),
+  )
   update(
     @Req() req: AuthenticatedRequest,
     @Param('id') id: string,
     @Body() dto: UpdateTechniqueDto,
+    @UploadedFile() image?: UploadedImageFile,
   ) {
     const ownerId = req.user?.sub;
 
     if (!ownerId) {
       throw new UnauthorizedException('Invalid token payload');
+    }
+
+    if (image) {
+      const extension = extname(image.originalname);
+      const fileName = extension
+        ? `technique-${image.filename}${extension}`
+        : image.filename;
+
+      if (fileName !== image.filename) {
+        renameSync(image.path, join(uploadsPath, fileName));
+      }
+
+      dto.photoUrl = `${req.protocol}://${req.get('host')}/static/${fileName}`;
     }
 
     return this.techniqueService.updateTechnique({ id }, dto, ownerId);
