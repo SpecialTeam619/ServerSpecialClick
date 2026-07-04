@@ -1,12 +1,26 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   ArrayMinSize,
   IsArray,
+  IsInt,
   IsOptional,
   IsString,
   MaxLength,
+  Min,
 } from 'class-validator';
+
+function toInt(value: unknown): unknown {
+  if (typeof value === 'number') {
+    return value;
+  }
+
+  if (typeof value === 'string' && value.trim() !== '') {
+    return Number(value);
+  }
+
+  return value;
+}
 
 export class CreateTechniqueDto {
   @ApiProperty({
@@ -36,6 +50,16 @@ export class CreateTechniqueDto {
   })
   @IsString({ message: 'Описание должно быть строкой' })
   description!: string;
+
+  @ApiProperty({
+    example: 2500,
+    description: 'Стоимость аренды в рублях за час',
+  })
+  @Transform(({ value }) => toInt(value))
+  @Type(() => Number)
+  @IsInt({ message: 'Цена должна быть целым числом' })
+  @Min(1, { message: 'Цена должна быть больше 0' })
+  pricePerHour!: number;
 
   @ApiProperty({
     example: ['property1', 'property2'],

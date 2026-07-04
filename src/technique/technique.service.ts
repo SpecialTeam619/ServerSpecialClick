@@ -126,6 +126,10 @@ export class TechniqueService extends TechniqueCrudService {
       data.photoUrl = updateDto.photoUrl;
     }
 
+    if (typeof updateDto.pricePerHour !== 'undefined') {
+      data.pricePerHour = updateDto.pricePerHour;
+    }
+
     const result = await this.prisma.technique.update({
       where: id,
       data,

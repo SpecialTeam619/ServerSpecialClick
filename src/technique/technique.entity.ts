@@ -46,6 +46,12 @@ export class Technique {
   photoUrl!: string | null;
 
   @ApiProperty({
+    example: 2500,
+    description: 'Стоимость аренды в рублях за час',
+  })
+  pricePerHour!: number;
+
+  @ApiProperty({
     example: ['property1', 'property2'],
     description: 'Свойства техники',
   })

@@ -20,8 +20,18 @@ export type TechniqueModel = runtime.Types.Result.DefaultSelection<Prisma.$Techn
 
 export type AggregateTechnique = {
   _count: TechniqueCountAggregateOutputType | null
+  _avg: TechniqueAvgAggregateOutputType | null
+  _sum: TechniqueSumAggregateOutputType | null
   _min: TechniqueMinAggregateOutputType | null
   _max: TechniqueMaxAggregateOutputType | null
+}
+
+export type TechniqueAvgAggregateOutputType = {
+  pricePerHour: number | null
+}
+
+export type TechniqueSumAggregateOutputType = {
+  pricePerHour: number | null
 }
 
 export type TechniqueMinAggregateOutputType = {
@@ -31,6 +41,7 @@ export type TechniqueMinAggregateOutputType = {
   techniqueTypeId: string | null
   description: string | null
   photoUrl: string | null
+  pricePerHour: number | null
   createdAt: Date | null
   updatedAt: Date | null
   status: $Enums.StatusTechnique | null
@@ -43,6 +54,7 @@ export type TechniqueMaxAggregateOutputType = {
   techniqueTypeId: string | null
   description: string | null
   photoUrl: string | null
+  pricePerHour: number | null
   createdAt: Date | null
   updatedAt: Date | null
   status: $Enums.StatusTechnique | null
@@ -55,6 +67,7 @@ export type TechniqueCountAggregateOutputType = {
   techniqueTypeId: number
   description: number
   photoUrl: number
+  pricePerHour: number
   property: number
   createdAt: number
   updatedAt: number
@@ -63,6 +76,14 @@ export type TechniqueCountAggregateOutputType = {
 }
 
 
+export type TechniqueAvgAggregateInputType = {
+  pricePerHour?: true
+}
+
+export type TechniqueSumAggregateInputType = {
+  pricePerHour?: true
+}
+
 export type TechniqueMinAggregateInputType = {
   id?: true
   ownerId?: true
@@ -70,6 +91,7 @@ export type TechniqueMinAggregateInputType = {
   techniqueTypeId?: true
   description?: true
   photoUrl?: true
+  pricePerHour?: true
   createdAt?: true
   updatedAt?: true
   status?: true
@@ -82,6 +104,7 @@ export type TechniqueMaxAggregateInputType = {
   techniqueTypeId?: true
   description?: true
   photoUrl?: true
+  pricePerHour?: true
   createdAt?: true
   updatedAt?: true
   status?: true
@@ -94,6 +117,7 @@ export type TechniqueCountAggregateInputType = {
   techniqueTypeId?: true
   description?: true
   photoUrl?: true
+  pricePerHour?: true
   property?: true
   createdAt?: true
   updatedAt?: true
@@ -139,6 +163,18 @@ export type TechniqueAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inte
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: TechniqueAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: TechniqueSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: TechniqueMinAggregateInputType
@@ -169,6 +205,8 @@ export type TechniqueGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   _count?: TechniqueCountAggregateInputType | true
+  _avg?: TechniqueAvgAggregateInputType
+  _sum?: TechniqueSumAggregateInputType
   _min?: TechniqueMinAggregateInputType
   _max?: TechniqueMaxAggregateInputType
 }
@@ -180,11 +218,14 @@ export type TechniqueGroupByOutputType = {
   techniqueTypeId: string
   description: string
   photoUrl: string | null
+  pricePerHour: number
   property: string[]
   createdAt: Date
   updatedAt: Date
   status: $Enums.StatusTechnique
   _count: TechniqueCountAggregateOutputType | null
+  _avg: TechniqueAvgAggregateOutputType | null
+  _sum: TechniqueSumAggregateOutputType | null
   _min: TechniqueMinAggregateOutputType | null
   _max: TechniqueMaxAggregateOutputType | null
 }
@@ -214,6 +255,7 @@ export type TechniqueWhereInput = {
   techniqueTypeId?: Prisma.StringFilter<"Technique"> | string
   description?: Prisma.StringFilter<"Technique"> | string
   photoUrl?: Prisma.StringNullableFilter<"Technique"> | string | null
+  pricePerHour?: Prisma.IntFilter<"Technique"> | number
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
@@ -230,6 +272,7 @@ export type TechniqueOrderByWithRelationInput = {
   techniqueTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  pricePerHour?: Prisma.SortOrder
   property?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -249,6 +292,7 @@ export type TechniqueWhereUniqueInput = Prisma.AtLeast<{
   techniqueTypeId?: Prisma.StringFilter<"Technique"> | string
   description?: Prisma.StringFilter<"Technique"> | string
   photoUrl?: Prisma.StringNullableFilter<"Technique"> | string | null
+  pricePerHour?: Prisma.IntFilter<"Technique"> | number
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
@@ -265,13 +309,16 @@ export type TechniqueOrderByWithAggregationInput = {
   techniqueTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  pricePerHour?: Prisma.SortOrder
   property?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   _count?: Prisma.TechniqueCountOrderByAggregateInput
+  _avg?: Prisma.TechniqueAvgOrderByAggregateInput
   _max?: Prisma.TechniqueMaxOrderByAggregateInput
   _min?: Prisma.TechniqueMinOrderByAggregateInput
+  _sum?: Prisma.TechniqueSumOrderByAggregateInput
 }
 
 export type TechniqueScalarWhereWithAggregatesInput = {
@@ -284,6 +331,7 @@ export type TechniqueScalarWhereWithAggregatesInput = {
   techniqueTypeId?: Prisma.StringWithAggregatesFilter<"Technique"> | string
   description?: Prisma.StringWithAggregatesFilter<"Technique"> | string
   photoUrl?: Prisma.StringNullableWithAggregatesFilter<"Technique"> | string | null
+  pricePerHour?: Prisma.IntWithAggregatesFilter<"Technique"> | number
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Technique"> | Date | string
@@ -295,6 +343,7 @@ export type TechniqueCreateInput = {
   name: string
   description: string
   photoUrl?: string | null
+  pricePerHour?: number
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -311,6 +360,7 @@ export type TechniqueUncheckedCreateInput = {
   techniqueTypeId: string
   description: string
   photoUrl?: string | null
+  pricePerHour?: number
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -323,6 +373,7 @@ export type TechniqueUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -339,6 +390,7 @@ export type TechniqueUncheckedUpdateInput = {
   techniqueTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -353,6 +405,7 @@ export type TechniqueCreateManyInput = {
   techniqueTypeId: string
   description: string
   photoUrl?: string | null
+  pricePerHour?: number
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -364,6 +417,7 @@ export type TechniqueUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -377,6 +431,7 @@ export type TechniqueUncheckedUpdateManyInput = {
   techniqueTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -408,10 +463,15 @@ export type TechniqueCountOrderByAggregateInput = {
   techniqueTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
+  pricePerHour?: Prisma.SortOrder
   property?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+}
+
+export type TechniqueAvgOrderByAggregateInput = {
+  pricePerHour?: Prisma.SortOrder
 }
 
 export type TechniqueMaxOrderByAggregateInput = {
@@ -421,6 +481,7 @@ export type TechniqueMaxOrderByAggregateInput = {
   techniqueTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
+  pricePerHour?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -433,9 +494,14 @@ export type TechniqueMinOrderByAggregateInput = {
   techniqueTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
+  pricePerHour?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+}
+
+export type TechniqueSumOrderByAggregateInput = {
+  pricePerHour?: Prisma.SortOrder
 }
 
 export type TechniqueNullableScalarRelationFilter = {
@@ -531,6 +597,14 @@ export type TechniqueCreatepropertyInput = {
   set: string[]
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type TechniqueUpdatepropertyInput = {
   set?: string[]
   push?: string | string[]
@@ -561,6 +635,7 @@ export type TechniqueCreateWithoutOwnerInput = {
   name: string
   description: string
   photoUrl?: string | null
+  pricePerHour?: number
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -575,6 +650,7 @@ export type TechniqueUncheckedCreateWithoutOwnerInput = {
   techniqueTypeId: string
   description: string
   photoUrl?: string | null
+  pricePerHour?: number
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -618,6 +694,7 @@ export type TechniqueScalarWhereInput = {
   techniqueTypeId?: Prisma.StringFilter<"Technique"> | string
   description?: Prisma.StringFilter<"Technique"> | string
   photoUrl?: Prisma.StringNullableFilter<"Technique"> | string | null
+  pricePerHour?: Prisma.IntFilter<"Technique"> | number
   property?: Prisma.StringNullableListFilter<"Technique">
   createdAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Technique"> | Date | string
@@ -629,6 +706,7 @@ export type TechniqueCreateWithoutTechniqueTypeInput = {
   name: string
   description: string
   photoUrl?: string | null
+  pricePerHour?: number
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -643,6 +721,7 @@ export type TechniqueUncheckedCreateWithoutTechniqueTypeInput = {
   name: string
   description: string
   photoUrl?: string | null
+  pricePerHour?: number
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -681,6 +760,7 @@ export type TechniqueCreateWithoutOrdersInput = {
   name: string
   description: string
   photoUrl?: string | null
+  pricePerHour?: number
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -696,6 +776,7 @@ export type TechniqueUncheckedCreateWithoutOrdersInput = {
   techniqueTypeId: string
   description: string
   photoUrl?: string | null
+  pricePerHour?: number
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -723,6 +804,7 @@ export type TechniqueUpdateWithoutOrdersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -738,6 +820,7 @@ export type TechniqueUncheckedUpdateWithoutOrdersInput = {
   techniqueTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -750,6 +833,7 @@ export type TechniqueCreateManyOwnerInput = {
   techniqueTypeId: string
   description: string
   photoUrl?: string | null
+  pricePerHour?: number
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -761,6 +845,7 @@ export type TechniqueUpdateWithoutOwnerInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -775,6 +860,7 @@ export type TechniqueUncheckedUpdateWithoutOwnerInput = {
   techniqueTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -788,6 +874,7 @@ export type TechniqueUncheckedUpdateManyWithoutOwnerInput = {
   techniqueTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -800,6 +887,7 @@ export type TechniqueCreateManyTechniqueTypeInput = {
   name: string
   description: string
   photoUrl?: string | null
+  pricePerHour?: number
   property?: Prisma.TechniqueCreatepropertyInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -811,6 +899,7 @@ export type TechniqueUpdateWithoutTechniqueTypeInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -825,6 +914,7 @@ export type TechniqueUncheckedUpdateWithoutTechniqueTypeInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -838,6 +928,7 @@ export type TechniqueUncheckedUpdateManyWithoutTechniqueTypeInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricePerHour?: Prisma.IntFieldUpdateOperationsInput | number
   property?: Prisma.TechniqueUpdatepropertyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -882,6 +973,7 @@ export type TechniqueSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   techniqueTypeId?: boolean
   description?: boolean
   photoUrl?: boolean
+  pricePerHour?: boolean
   property?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -899,6 +991,7 @@ export type TechniqueSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   techniqueTypeId?: boolean
   description?: boolean
   photoUrl?: boolean
+  pricePerHour?: boolean
   property?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -914,6 +1007,7 @@ export type TechniqueSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   techniqueTypeId?: boolean
   description?: boolean
   photoUrl?: boolean
+  pricePerHour?: boolean
   property?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -929,13 +1023,14 @@ export type TechniqueSelectScalar = {
   techniqueTypeId?: boolean
   description?: boolean
   photoUrl?: boolean
+  pricePerHour?: boolean
   property?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   status?: boolean
 }
 
-export type TechniqueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerId" | "name" | "techniqueTypeId" | "description" | "photoUrl" | "property" | "createdAt" | "updatedAt" | "status", ExtArgs["result"]["technique"]>
+export type TechniqueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerId" | "name" | "techniqueTypeId" | "description" | "photoUrl" | "pricePerHour" | "property" | "createdAt" | "updatedAt" | "status", ExtArgs["result"]["technique"]>
 export type TechniqueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   techniqueType?: boolean | Prisma.TechniqueTypeDefaultArgs<ExtArgs>
@@ -965,6 +1060,7 @@ export type $TechniquePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     techniqueTypeId: string
     description: string
     photoUrl: string | null
+    pricePerHour: number
     property: string[]
     createdAt: Date
     updatedAt: Date
@@ -1401,6 +1497,7 @@ export interface TechniqueFieldRefs {
   readonly techniqueTypeId: Prisma.FieldRef<"Technique", 'String'>
   readonly description: Prisma.FieldRef<"Technique", 'String'>
   readonly photoUrl: Prisma.FieldRef<"Technique", 'String'>
+  readonly pricePerHour: Prisma.FieldRef<"Technique", 'Int'>
   readonly property: Prisma.FieldRef<"Technique", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Technique", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Technique", 'DateTime'>
